@@ -6,7 +6,7 @@ namespace FixedMath
 {
     public class FixedCalc
     {
-        public static FixedInt Sqrt(FixedInt value, int interatorCount = 8)
+        public static FixedInt Sqrt(FixedInt value, int iteratorCount = 8)
         {
             if (value == FixedInt.Zero)
             {
@@ -17,11 +17,14 @@ namespace FixedMath
                 throw new Exception("被平方数小于0");
             }
             FixedInt result = value;
-            for (int i = 0; i < interatorCount; i++)
+            FixedInt history;
+            int count = 0;
+            do
             {
+                history = result;
                 result = (result + value / result) >> 1;
-                //UnityEngine.Debug.Log($"迭代{i}次，result={result.RawFloat}");
-            }
+                ++count;
+            } while (result != history && count < iteratorCount);
             return result;
         }
     }

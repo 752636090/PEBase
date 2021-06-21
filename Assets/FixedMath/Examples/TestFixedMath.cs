@@ -59,6 +59,10 @@ public class TestFixedMath : MonoBehaviour
 
     private static void Example4()
     {
+        FixedVector3 v = new FixedVector3(2, 2, 2);
+        print(v.Magnitude);
+        print("----------------------------");
+
         FixedInt val = 3;
         print(FixedCalc.Sqrt(val));
     }

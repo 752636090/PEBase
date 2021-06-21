@@ -195,7 +195,7 @@ namespace FixedMath
         {
             get
             {
-                return FixedCalc.Sqrt(Magnitude);
+                return FixedCalc.Sqrt(SqrMagnitude);
             }
         }
 
