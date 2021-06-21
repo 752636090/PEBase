@@ -170,7 +170,7 @@ namespace FixedMath
             }
         }
 
-        public float RawInt
+        public int RawInt
         {
             get
             {

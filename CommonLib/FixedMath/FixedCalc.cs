@@ -30,7 +30,24 @@ namespace FixedMath
 
         public static FixedInt Acos(FixedInt value)
         {
+            FixedInt rate = (value * AcosTable.HalfIndexCount) + AcosTable.HalfIndexCount;
+            rate = Clamp(rate, FixedInt.Zero, AcosTable.IndexCount);
+            int rad = AcosTable.Table[rate.RawInt];
 
+            return rad;
+        }
+
+        public static FixedInt Clamp(FixedInt input, FixedInt min, FixedInt max)
+        {
+            if (input < min)
+            {
+                return min;
+            }
+            if (input > max)
+            {
+                return max;
+            }
+            return input;
         }
     }
 }
