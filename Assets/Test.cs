@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool IsTestFixedMath;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        if (IsTestFixedMath) gameObject.AddComponent<TestFixedMath>();
     }
 }
