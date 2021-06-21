@@ -7,7 +7,7 @@ public class TestFixedMath : MonoBehaviour
 {
     private void Start()
     {
-        Example5();
+        Example7();
     }
 
     private static void Example1()
@@ -75,5 +75,30 @@ public class TestFixedMath : MonoBehaviour
         print($"c:{v}");
         v.Normalize();
         print($"c:{v}");
+    }
+
+    private static void Example6()
+    {
+        FixedVector3 v1 = new FixedVector3(1, 0, 0);
+        FixedVector3 v2 = new FixedVector3(1, 1, 0);
+        FixedArgs angle = FixedVector3.Angle(v1, v2);
+        print($"angle view:{angle.ConvertViewAngle()}");
+        print($"angle float:{angle.ConvertToFloat()}");
+        print($"angle info:{angle}");
+
+        FixedVector3 v3 = new FixedVector3(1, 0, 0);
+        FixedVector3 v4 = new FixedVector3(1, (FixedInt)1.732f, 0);
+        FixedArgs angle2 = FixedVector3.Angle(v3, v4);
+        print($"angle view:{angle2.ConvertViewAngle()}");
+        print($"angle float:{angle2.ConvertToFloat()}");
+        print($"angle info:{angle2}");
+    }
+
+    private static void Example7()
+    {
+        FixedVector3 v1 = new FixedVector3(Vector3.right);
+        FixedVector3 v2 = new FixedVector3(Vector3.up);
+
+        print(FixedVector3.Angle(v1, v2).ConvertViewAngle());
     }
 }
