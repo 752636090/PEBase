@@ -122,6 +122,59 @@ namespace FixedMath
         }
         #endregion
 
+        #region 运算符
+        public static FixedVector3 operator +(FixedVector3 v1, FixedVector3 v2)
+        {
+            FixedInt x = v1.X + v2.X;
+            FixedInt y = v1.Y + v2.Y;
+            FixedInt z = v1.Z + v2.Z;
+            return new FixedVector3(x, y, z);
+        }
+        public static FixedVector3 operator -(FixedVector3 v1, FixedVector3 v2)
+        {
+            FixedInt x = v1.X - v2.X;
+            FixedInt y = v1.Y - v2.Y;
+            FixedInt z = v1.Z - v2.Z;
+            return new FixedVector3(x, y, z);
+        }
+        public static FixedVector3 operator *(FixedVector3 v, FixedInt value)
+        {
+            FixedInt x = v.X * value;
+            FixedInt y = v.Y * value;
+            FixedInt z = v.Z * value;
+            return new FixedVector3(x, y, z);
+        }
+        public static FixedVector3 operator *(FixedInt value, FixedVector3 v)
+        {
+            FixedInt x = v.X * value;
+            FixedInt y = v.Y * value;
+            FixedInt z = v.Z * value;
+            return new FixedVector3(x, y, z);
+        }
+        public static FixedVector3 operator /(FixedVector3 v, FixedInt value)
+        {
+            FixedInt x = v.X / value;
+            FixedInt y = v.Y / value;
+            FixedInt z = v.Z / value;
+            return new FixedVector3(x, y, z);
+        }
+        public static FixedVector3 operator -(FixedVector3 v)
+        {
+            FixedInt x = -v.X;
+            FixedInt y = -v.Y;
+            FixedInt z = -v.Z;
+            return new FixedVector3(x, y, z);
+        }
+        public static bool operator ==(FixedVector3 v1, FixedVector3 v2)
+        {
+            return v1.X == v2.X && v1.Y == v2.Y && v1.Z == v2.Z;
+        }
+        public static bool operator !=(FixedVector3 v1, FixedVector3 v2)
+        {
+            return v1.X != v2.X || v1.Y != v2.Y || v1.Z != v2.Z;
+        }
+        #endregion
+
 #if UNITY_ENV
         /// <summary>
         /// 获取浮点数向量（注意：不可再进行逻辑运算）
