@@ -14,5 +14,10 @@ public class TestFixedMath : MonoBehaviour
 
         FixedInt val3 = val1 << 1;
         print(val3.ToString());
+
+        FixedInt val4 = 1;
+        FixedInt val5 = (FixedInt)0.5f;
+
+
     }
 }

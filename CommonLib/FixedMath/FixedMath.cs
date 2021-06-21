@@ -2,12 +2,14 @@
 
 namespace FixedMath
 {
-
     public struct FixedInt
     {
         static class Const
         {
-            public const int BitMoveCount = 10; // 移位计数
+            /// <summary>
+            /// 移位计数
+            /// </summary>
+            public const int BitMoveCount = 10;
             public const long MultiplierFactor = 1 << BitMoveCount;
         }
 
@@ -24,6 +26,7 @@ namespace FixedMath
             }
         }
 
+        #region 构造函数
         /// <summary>
         /// 内部使用，已经缩放完成的数据
         /// </summary>
@@ -43,11 +46,52 @@ namespace FixedMath
             scaledValue = (long)Math.Round(val * Const.MultiplierFactor);
         }
 
+        /// <summary>
+        /// float损失精度，必须显示转换
+        /// </summary>
+        /// <param name="f"></param>
+        public static explicit operator FixedInt(float f)
+        {
+            return new FixedInt((long)Math.Round(f * Const.MultiplierFactor));
+        }
+
+        /// <summary>
+        /// int不损失精度，可以隐式转换
+        /// </summary>
+        /// <param name="i"></param>
+        public static implicit operator FixedInt(int i)
+        {
+            return new FixedInt(i);
+        }
+        #endregion
+
         #region 运算符
+        #region 加减乘除、取反
+        public static FixedInt operator +(FixedInt a, FixedInt b)
+        {
+            return new FixedInt(a.scaledValue + b.scaledValue);
+        }
+
+        public static FixedInt operator -(FixedInt a, FixedInt b)
+        {
+            return new FixedInt(a.scaledValue - b.scaledValue);
+        }
+
+        public static FixedInt operator *(FixedInt a, FixedInt b)
+        {
+            return new FixedInt(a.scaledValue + b.scaledValue);
+        }
+
+        public static FixedInt operator /(FixedInt a, FixedInt b)
+        {
+            return new FixedInt(a.scaledValue + b.scaledValue);
+        }
+
         public static FixedInt operator -(FixedInt value)
         {
             return new FixedInt(-value.scaledValue);
-        }
+        } 
+        #endregion
 
         public static bool operator ==(FixedInt a, FixedInt b)
         {
@@ -107,6 +151,21 @@ namespace FixedMath
             {
                 return (int)(scaledValue >> Const.BitMoveCount);
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            FixedInt vInt = (FixedInt)obj;
+            return scaledValue == vInt.scaledValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return RawFloat.GetHashCode();
         }
 
         public override string ToString()
