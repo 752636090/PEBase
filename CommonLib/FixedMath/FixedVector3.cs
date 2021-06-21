@@ -256,6 +256,21 @@ namespace FixedMath
             return new FixedVector3(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
         }
 
+        /// <summary>
+        /// 向量夹角
+        /// </summary>
+        public static FixedInt Angle(FixedVector3 from, FixedVector3 to)
+        {
+            FixedInt dot = Dot(from, to);
+            FixedInt mod = from.Magnitude * to.Magnitude;
+            if (mod == 0)
+            {
+                return FixedInt.Zero;
+            }
+            // 反余弦函数计算
+            return 0;
+        }
+
 #if UNITY_ENV
         /// <summary>
         /// 获取浮点数向量（注意：不可再进行逻辑运算）

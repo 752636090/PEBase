@@ -27,5 +27,10 @@ namespace FixedMath
             } while (result != history && count < iteratorCount);
             return result;
         }
+
+        public static FixedInt Acos(FixedInt value)
+        {
+
+        }
     }
 }
