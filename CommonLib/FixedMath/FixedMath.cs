@@ -80,7 +80,14 @@ namespace FixedMath
         public static FixedInt operator *(FixedInt a, FixedInt b)
         {
             long value = a.scaledValue * b.scaledValue;
-            value >>= Const.BitMoveCount;
+            if (value >= 0)
+            {
+                value >>= Const.BitMoveCount;
+            }
+            else
+            {
+                value = -(-value >> Const.BitMoveCount);
+            }
             return new FixedInt(value);
         }
 
@@ -99,7 +106,7 @@ namespace FixedMath
         }
         #endregion
 
-        #region 比较
+        #region 比较、移位
         public static bool operator ==(FixedInt a, FixedInt b)
         {
             return a.scaledValue == b.scaledValue;
@@ -132,7 +139,14 @@ namespace FixedMath
 
         public static FixedInt operator >>(FixedInt value, int moveCount)
         {
-            return new FixedInt(value.scaledValue >> moveCount);
+            if (value.scaledValue >= 0)
+            {
+                return new FixedInt(value.scaledValue >> moveCount);
+            }
+            else
+            {
+                return new FixedInt(-(-value.scaledValue >> moveCount));
+            }
         }
 
         public static FixedInt operator <<(FixedInt value, int moveCount)
@@ -157,7 +171,14 @@ namespace FixedMath
         {
             get
             {
-                return (int)(scaledValue >> Const.BitMoveCount);
+                if (scaledValue >= 0)
+                {
+                    return (int)(scaledValue >> Const.BitMoveCount);
+                }
+                else
+                {
+                    return -(int)(-scaledValue >> Const.BitMoveCount); // 解决负数是补码的问题
+                }
             }
         }
 

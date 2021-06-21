@@ -7,7 +7,7 @@ public class TestFixedMath : MonoBehaviour
 {
     private void Start()
     {
-        Example2();
+        Example3();
     }
 
     private static void Example1()
@@ -33,5 +33,20 @@ public class TestFixedMath : MonoBehaviour
         FixedInt val3 = new FixedInt(2);
         FixedInt val4 = new FixedInt(0.5f);
         print((val3 / val4).ToString());
+    }
+
+    private static void Example3()
+    {
+        int hp = 500;
+        FixedInt val1 = hp * new FixedInt(0.3f);
+        print($"before scale:{val1.ScaleValue}");
+        print($"before float:{val1.RawFloat}");
+        print($"before int:{val1.RawInt}");
+        print("----------------------------");
+
+        FixedInt val2 = hp * new FixedInt(-0.3f);
+        print($"after scale:{val2.ScaleValue}");
+        print($"after float:{val2.RawFloat}");
+        print($"after int:{val2.RawInt}");
     }
 }
