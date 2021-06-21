@@ -79,20 +79,27 @@ namespace FixedMath
 
         public static FixedInt operator *(FixedInt a, FixedInt b)
         {
-            return new FixedInt(a.scaledValue + b.scaledValue);
+            long value = a.scaledValue * b.scaledValue;
+            value >>= Const.BitMoveCount;
+            return new FixedInt(value);
         }
 
         public static FixedInt operator /(FixedInt a, FixedInt b)
         {
-            return new FixedInt(a.scaledValue + b.scaledValue);
+            if (b.scaledValue == 0)
+            {
+                throw new Exception("除数等于0");
+            }
+            return new FixedInt((a.scaledValue << Const.BitMoveCount) / b.scaledValue);
         }
 
         public static FixedInt operator -(FixedInt value)
         {
             return new FixedInt(-value.scaledValue);
-        } 
+        }
         #endregion
 
+        #region 比较
         public static bool operator ==(FixedInt a, FixedInt b)
         {
             return a.scaledValue == b.scaledValue;
@@ -131,7 +138,8 @@ namespace FixedMath
         public static FixedInt operator <<(FixedInt value, int moveCount)
         {
             return new FixedInt(value.scaledValue << moveCount);
-        }
+        } 
+        #endregion
         #endregion
 
         /// <summary>
