@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{B20D3236-DA94-6C38-3F9A-40D48355C977}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixedMath", "CommonLib\FixedMath\FixedMath.csproj", "{E23DC288-A036-49C2-A3B1-5D75C8EB49E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B20D3236-DA94-6C38-3F9A-40D48355C977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B20D3236-DA94-6C38-3F9A-40D48355C977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B20D3236-DA94-6C38-3F9A-40D48355C977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23DC288-A036-49C2-A3B1-5D75C8EB49E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23DC288-A036-49C2-A3B1-5D75C8EB49E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23DC288-A036-49C2-A3B1-5D75C8EB49E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23DC288-A036-49C2-A3B1-5D75C8EB49E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
