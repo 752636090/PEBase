@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
+#if UNITY_ENV
+using UnityEngine;
+#endif
 
 namespace FixedMath
 {
@@ -16,6 +20,15 @@ namespace FixedMath
             this.Y = y;
             this.Z = z;
         }
+
+#if UNITY_ENV
+        public FixedVector3(Vector3 v)
+        {
+            X = (FixedInt)v.x;
+            Y = (FixedInt)v.y;
+            Z = (FixedInt)v.z;
+        }
+#endif
 
         public FixedInt this[int index]
         {
@@ -108,5 +121,41 @@ namespace FixedMath
             }
         }
         #endregion
+
+#if UNITY_ENV
+        /// <summary>
+        /// 获取浮点数向量（注意：不可再进行逻辑运算）
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 ConvertViewVector()
+        {
+            return new Vector3(X.RawFloat, Y.RawFloat, Z.RawFloat);
+        }
+#endif
+
+        public long[] ConvertLongArray()
+        {
+            return new long[] { X.ScaleValue, Y.ScaleValue, Z.ScaleValue };
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            FixedVector3 v = (FixedVector3)obj;
+            return v.X == X && v.Y == Y && v.Z == Z;
+        }
+
+        public override int GetHashCode()
+        {
+            return X.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"x:{X} y:{Y} z:{Z}";
+        }
     }
 }

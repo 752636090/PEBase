@@ -6,6 +6,14 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>G:\Unity\PEBase\Assets\FixedMath\</OutputPath>
+    <DefineConstants>TRACE;UNITY_ENV</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
 
 </Project>

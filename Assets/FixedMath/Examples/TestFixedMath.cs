@@ -52,7 +52,8 @@ public class TestFixedMath : MonoBehaviour
 
     private static void Example4()
     {
-        FixedVector3 v1 = new FixedVector3(1, 2, 3);
+        //FixedVector3 v1 = new FixedVector3(1, 2, 3);
+        FixedVector3 v1 = new FixedVector3(new Vector3(1, 1.5f, 2.3f));
         print(v1.ToString());
     }
 }
