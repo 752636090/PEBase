@@ -50,10 +50,16 @@ public class TestFixedMath : MonoBehaviour
         print($"after int:{val2.RawInt}");
     }
 
-    private static void Example4()
+    private static void ExampleV3()
     {
         //FixedVector3 v1 = new FixedVector3(1, 2, 3);
         FixedVector3 v1 = new FixedVector3(new Vector3(1, 1.5f, 2.3f));
         print(v1.ToString());
+    }
+
+    private static void Example4()
+    {
+        FixedInt val = 3;
+        print(FixedCalc.Sqrt(val));
     }
 }

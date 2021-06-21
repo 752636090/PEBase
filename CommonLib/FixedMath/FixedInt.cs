@@ -13,6 +13,9 @@ namespace FixedMath
             public const long MultiplierFactor = 1 << BitMoveCount;
         }
 
+        public static readonly FixedInt Zero = new FixedInt(0);
+        public static readonly FixedInt One = new FixedInt(1);
+
         private long scaledValue;
         public long ScaleValue
         {

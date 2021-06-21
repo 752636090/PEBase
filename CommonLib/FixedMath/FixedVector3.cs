@@ -175,6 +175,30 @@ namespace FixedMath
         }
         #endregion
 
+        /// <summary>
+        /// 当前向量长度平方
+        /// </summary>
+        public FixedInt SqrMagnitude
+        {
+            get
+            {
+                return X * X + Y * Y + Z * Z;
+            }
+        }
+
+        public static FixedInt SqrMagnitube(FixedVector3 v)
+        {
+            return v.X * v.X + v.Y * v.Y + v.Z * v.Z;
+        }
+
+        public FixedInt Magnitude
+        {
+            get
+            {
+                return FixedCalc.Sqrt(Magnitude);
+            }
+        }
+
 #if UNITY_ENV
         /// <summary>
         /// 获取浮点数向量（注意：不可再进行逻辑运算）
