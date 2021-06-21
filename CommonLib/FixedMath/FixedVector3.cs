@@ -240,6 +240,22 @@ namespace FixedMath
             }
         }
 
+        /// <summary>
+        /// 点乘
+        /// </summary>
+        public static FixedInt Dot(FixedVector3 a, FixedVector3 b)
+        {
+            return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
+        }
+
+        /// <summary>
+        /// 叉乘
+        /// </summary>
+        public static FixedVector3 Cross(FixedVector3 a, FixedVector3 b)
+        {
+            return new FixedVector3(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
+        }
+
 #if UNITY_ENV
         /// <summary>
         /// 获取浮点数向量（注意：不可再进行逻辑运算）
