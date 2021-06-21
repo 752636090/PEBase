@@ -7,7 +7,7 @@ public class TestFixedMath : MonoBehaviour
 {
     private void Start()
     {
-        Example3();
+        Example4();
     }
 
     private static void Example1()
@@ -48,5 +48,11 @@ public class TestFixedMath : MonoBehaviour
         print($"after scale:{val2.ScaleValue}");
         print($"after float:{val2.RawFloat}");
         print($"after int:{val2.RawInt}");
+    }
+
+    private static void Example4()
+    {
+        FixedVector3 v1 = new FixedVector3(1, 2, 3);
+        print(v1.ToString());
     }
 }

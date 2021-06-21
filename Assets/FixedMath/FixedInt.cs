@@ -4,7 +4,7 @@ namespace FixedMath
 {
     public struct FixedInt
     {
-        static class Const
+        private static class Const
         {
             /// <summary>
             /// 移位计数

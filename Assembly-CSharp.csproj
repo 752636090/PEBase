@@ -58,9 +58,8 @@
   <ItemGroup>
     <Compile Include="Assets\Test.cs" />
     <Compile Include="Assets\FixedMath\Examples\TestFixedMath.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\FixedMath\netstandard2.0\FixedMath.dll" />
+    <Compile Include="Assets\FixedMath\FixedInt.cs" />
+    <Compile Include="Assets\FixedMath\FixedVector3.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -287,9 +286,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="FixedMath">
-      <HintPath>Assets\FixedMath\netstandard2.0\FixedMath.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
