@@ -9,5 +9,10 @@ public class TestFixedMath : MonoBehaviour
     {
         FixedInt val1 = new FixedInt(1);
         FixedInt val2 = new FixedInt(0.5f);
+
+        print(val1 > val2);
+
+        FixedInt val3 = val1 << 1;
+        print(val3.ToString());
     }
 }
