@@ -7,7 +7,7 @@ public class TestFixedMath : MonoBehaviour
 {
     private void Start()
     {
-        Example4();
+        Example5();
     }
 
     private static void Example1()
@@ -65,5 +65,15 @@ public class TestFixedMath : MonoBehaviour
 
         FixedInt val = 3;
         print(FixedCalc.Sqrt(val));
+    }
+
+    private static void Example5()
+    {
+        FixedVector3 v = new FixedVector3(2, 2, 2);
+        print($"a:{v.Normalized}");
+        print($"b:{FixedVector3.Normalize(v)}");
+        print($"c:{v}");
+        v.Normalize();
+        print($"c:{v}");
     }
 }

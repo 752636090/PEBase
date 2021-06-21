@@ -199,6 +199,47 @@ namespace FixedMath
             }
         }
 
+        /// <summary>
+        /// 返回当前定点向量的单位向量
+        /// </summary>
+        public FixedVector3 Normalized
+        {
+            get
+            {
+                if (Magnitude > 0)
+                {
+                    FixedInt rate = FixedInt.One / Magnitude;
+                    return new FixedVector3(X * rate, Y * rate, Z * rate);
+                }
+                else
+                {
+                    return Zero;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回传入参数向量的单位向量
+        /// </summary>
+        public static FixedVector3 Normalize(FixedVector3 v)
+        {
+            return v.Normalized;
+        }
+
+        /// <summary>
+        /// 规格化当前向量为单位向量
+        /// </summary>
+        public void Normalize()
+        {
+            if (Magnitude > 0)
+            {
+                FixedInt rate = FixedInt.One / Magnitude;
+                X *= rate;
+                Y *= rate;
+                Z *= rate;
+            }
+        }
+
 #if UNITY_ENV
         /// <summary>
         /// 获取浮点数向量（注意：不可再进行逻辑运算）
