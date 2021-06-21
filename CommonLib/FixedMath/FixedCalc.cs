@@ -28,13 +28,12 @@ namespace FixedMath
             return result;
         }
 
-        public static FixedInt Acos(FixedInt value)
+        public static FixedArgs Acos(FixedInt value)
         {
             FixedInt rate = (value * AcosTable.HalfIndexCount) + AcosTable.HalfIndexCount;
             rate = Clamp(rate, FixedInt.Zero, AcosTable.IndexCount);
             int rad = AcosTable.Table[rate.RawInt];
-
-            return rad;
+            return new FixedArgs(rad, AcosTable.Multiplier);
         }
 
         public static FixedInt Clamp(FixedInt input, FixedInt min, FixedInt max)
