@@ -15,7 +15,7 @@ namespace KCPNet
         DisConnected
     }
 
-    public abstract class KCPSession
+    public abstract class KCPSession<T> where T : KCPMsg, new()
     {
         protected uint m_SessionId;
         Action<byte[], IPEndPoint> m_UdpSender;
@@ -46,6 +46,11 @@ namespace KCPNet
             {
                 byte[] bytes = buffer.ToArray();
                 m_UdpSender(bytes, m_RemotePoint);
+            };
+
+            m_Handle.OnReceive = (byte[] buffer) =>
+            {
+
             };
             cts = new CancellationTokenSource();
             ct = cts.Token;
@@ -78,7 +83,7 @@ namespace KCPNet
                             byte[] buffer = new byte[len];
                             if (m_Kcp.Recv(buffer) >= 0)
                             {
-
+                                m_Handle.Receive(buffer);
                             }
                         }
                         await Task.Delay(10);

@@ -17,5 +17,11 @@ namespace KCPNet
                 Out(buffer.Memory.Slice(0, avalidLength));
             }
         }
+
+        public Action<byte[]> OnReceive;
+        public void Receive(byte[] buffer)
+        {
+            OnReceive?.Invoke(buffer);
+        }
     }
 }
