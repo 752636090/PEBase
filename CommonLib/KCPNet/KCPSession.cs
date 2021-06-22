@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets.Kcp;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace KCPNet
 {
@@ -23,6 +25,8 @@ namespace KCPNet
 
         private KCPHandle m_Handle;
         private Kcp m_Kcp;
+        private CancellationTokenSource cts;
+        private CancellationToken ct;
 
         /// <param name="conv">conversation id</param>
         public void InitSession(uint sid, Action<byte[], IPEndPoint> udpSender, IPEndPoint remotePoint)
@@ -43,10 +47,53 @@ namespace KCPNet
                 byte[] bytes = buffer.ToArray();
                 m_UdpSender(bytes, m_RemotePoint);
             };
+            cts = new CancellationTokenSource();
+            ct = cts.Token;
+            Task.Run(BeginUpdateAsync, ct);
+        }
+
+        public void ReceiveData(byte[] buffer)
+        {
+            m_Kcp.Input(buffer.AsSpan());
+        }
+
+        private async void BeginUpdateAsync()
+        {
+            try
+            {
+                while (true)
+                {
+                    DateTime now = DateTime.UtcNow;
+                    OnUpdate(now);
+                    if (ct.IsCancellationRequested)
+                    {
+                        KCPTool.ColorLog(ConsoleColor.Cyan, "SessionUpdate Task is Cancelled.");
+                    }
+                    else
+                    {
+                        m_Kcp.Update(now);
+                        int len;
+                        while ((len = m_Kcp.PeekSize()) > 0)
+                        {
+                            byte[] buffer = new byte[len];
+                            if (m_Kcp.Recv(buffer) >= 0)
+                            {
+
+                            }
+                        }
+                        await Task.Delay(10);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                KCPTool.Warning($"Session Update 异常:{e.ToString()}");
+            }
         }
 
         public void CloseSession()
         {
+            cts.Cancel();
             OnDisConnected();
 
             OnSessionClose?.Invoke(m_SessionId);
@@ -59,9 +106,11 @@ namespace KCPNet
 
             m_Handle = null;
             m_Kcp = null;
+            cts = null;
         }
 
         protected abstract void OnDisConnected();
+        protected abstract void OnUpdate(DateTime now);
 
         public bool IsConnected()
         {

@@ -75,7 +75,14 @@ namespace KCPNet
                         }
                         else // 处理业务逻辑
                         {
-                            
+                            if (ClientSession != null && ClientSession.IsConnected())
+                            {
+                                ClientSession.ReceiveData(result.Buffer);
+                            }
+                            else // 没初始化且sid!=0，数据消息提前到了，直接丢弃消息，知道初始化完成，kcp重传再开始处理
+                            {
+                                KCPTool.Warning("Client is Initing...");
+                            }
                         }
                     }
                     else
