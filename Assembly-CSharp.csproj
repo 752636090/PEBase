@@ -59,8 +59,12 @@
     <Compile Include="Assets\FixedMath\Examples\TestFixedMath.cs" />
     <Compile Include="Assets\KCPNet\Examples\TestKCPNet.cs" />
     <Compile Include="Assets\Test.cs" />
+    <Compile Include="Assets\KCPNet\Examples\Client\ClientStart.cs" />
+    <Compile Include="Assets\KCPNet\Examples\Server\ServerStart.cs" />
+    <Compile Include="Assets\KCPNet\Examples\Client\ClientSession.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll" />
     <None Include="Assets\KCPNet\System.Runtime.CompilerServices.Unsafe.dll" />
     <None Include="Assets\KCPNet\System.Buffers.dll" />
     <None Include="Assets\FixedMath\netstandard2.0\FixedMath.dll" />
@@ -315,6 +319,9 @@
     </Reference>
     <Reference Include="System.Numerics.Vectors">
       <HintPath>Assets\KCPNet\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="KCPExampleProtocol">
+      <HintPath>Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
