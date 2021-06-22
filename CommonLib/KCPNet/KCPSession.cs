@@ -13,7 +13,7 @@ namespace KCPNet
         DisConnected
     }
 
-    public class KCPSession
+    public abstract class KCPSession
     {
         protected uint m_SessionId;
         Action<byte[], IPEndPoint> m_UdpSender;
@@ -42,6 +42,11 @@ namespace KCPNet
                 byte[] bytes = buffer.ToArray();
                 m_UdpSender(bytes, m_RemotePoint);
             };
+        }
+
+        public bool IsConnected()
+        {
+            return m_SessionState == SessionState.Connected;
         }
     }
 }
