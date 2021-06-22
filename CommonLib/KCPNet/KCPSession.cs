@@ -50,8 +50,16 @@ namespace KCPNet
 
             m_Handle.OnReceive = (byte[] buffer) =>
             {
-
+                buffer = KCPTool.Decompress(buffer);
+                T msg = KCPTool.Deserialize<T>(buffer);
+                if (msg != null)
+                {
+                    OnReceiveMsg(msg);
+                }
             };
+
+            OnConnected();
+
             cts = new CancellationTokenSource();
             ct = cts.Token;
             Task.Run(BeginUpdateAsync, ct);
@@ -96,6 +104,38 @@ namespace KCPNet
             }
         }
 
+        public void SendMsg(T msg)
+        {
+            if (IsConnected())
+            {
+                byte[] bytes = KCPTool.Serialize(msg);
+                if (bytes != null)
+                {
+                    SendMsg(bytes);
+                }
+            }
+            else
+            {
+                KCPTool.Warning("Session没有连接，不能发消息");
+            }
+        }
+
+        /// <summary>
+        /// 如果是广播消息，则先序列化然后广播字节数组
+        /// </summary>
+        public void SendMsg(byte[] bytes)
+        {
+            if (IsConnected())
+            {
+                bytes = KCPTool.Compress(bytes);
+                m_Kcp.Send(bytes.AsSpan());
+            }
+            else
+            {
+                KCPTool.Warning("Session没有连接，不能发消息");
+            }
+        }
+
         public void CloseSession()
         {
             cts.Cancel();
@@ -114,8 +154,10 @@ namespace KCPNet
             cts = null;
         }
 
-        protected abstract void OnDisConnected();
+        protected abstract void OnConnected();
         protected abstract void OnUpdate(DateTime now);
+        protected abstract void OnReceiveMsg(T msg);
+        protected abstract void OnDisConnected();
 
         public bool IsConnected()
         {

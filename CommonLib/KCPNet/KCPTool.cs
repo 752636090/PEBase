@@ -104,7 +104,7 @@ namespace KCPNet
                 }
                 catch (SerializationException e)
                 {
-                    Error("反序列化失败：" + e.Message);
+                    Error($"反序列化失败：{e.Message} bytesLen:{bytes.Length}");
                     throw;
                 }
             }
