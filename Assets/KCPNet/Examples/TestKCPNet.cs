@@ -6,11 +6,11 @@ public class TestKCPNet : MonoBehaviour
 {
     private void Start()
     {
-        KCPTest.KCPTest.Start();
+
     }
 
     private void Update()
     {
-        KCPTest.KCPTest.Update();
+
     }
 }
