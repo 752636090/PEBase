@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace KCPNet
 {
-    public class KCPNet<T> where T : KCPSession, new()
+    public class KCPNet<T, K> 
+        where T : KCPSession<K>, new()
+        where K : KCPMsg, new()
     {
         private UdpClient udp;
         private IPEndPoint remotePoint;
@@ -24,7 +26,6 @@ namespace KCPNet
 
         #region 客户端
         public T ClientSession;
-
         public void StartAsClient(string ip, int port)
         {
             udp = new UdpClient(0);
@@ -33,12 +34,10 @@ namespace KCPNet
 
             Task.Run(ClientReceive, ct);
         }
-
         public void ConnectServer()
         {
             SendUdpMsg(new byte[4], remotePoint);
         }
-
         private async void ClientReceive()
         {
             UdpReceiveResult result;
@@ -58,7 +57,7 @@ namespace KCPNet
                         uint sid = BitConverter.ToUInt32(result.Buffer, 0);
                         if (sid == 0) // sid数据
                         {
-                            if (ClientSession != null && ClientSession.IsConnected())
+                            if (ClientSession != null && ClientSession.IsConnected)
                             {
                                 KCPTool.Warning("已经建立连接，初始化完成了，直接丢弃多的sid");
                             }
@@ -75,7 +74,7 @@ namespace KCPNet
                         }
                         else // 处理业务逻辑
                         {
-                            if (ClientSession != null && ClientSession.IsConnected())
+                            if (ClientSession != null && ClientSession.IsConnected)
                             {
                                 ClientSession.ReceiveData(result.Buffer);
                             }
@@ -96,7 +95,6 @@ namespace KCPNet
                 }
             }
         }
-
         private void OnClientSessionClose(uint sid)
         {
             cts.Cancel();
@@ -107,7 +105,6 @@ namespace KCPNet
             }
             KCPTool.Warning($"Client Session Close, sid:{sid}");
         }
-
         public void CloseClient()
         {
             if (ClientSession != null)

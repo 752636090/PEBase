@@ -17,7 +17,11 @@ namespace KCPNet
 
     public abstract class KCPSession<T> where T : KCPMsg, new()
     {
-        protected uint m_SessionId;
+        public uint SessionId
+        {
+            get;
+            protected set;
+        }
         Action<byte[], IPEndPoint> m_UdpSender;
         private IPEndPoint m_RemotePoint;
         protected SessionState m_SessionState = SessionState.None;
@@ -28,10 +32,18 @@ namespace KCPNet
         private CancellationTokenSource cts;
         private CancellationToken ct;
 
+        public bool IsConnected
+        {
+            get
+            {
+                return m_SessionState == SessionState.Connected;
+            }
+        }
+
         /// <param name="conv">conversation id</param>
         public void InitSession(uint sid, Action<byte[], IPEndPoint> udpSender, IPEndPoint remotePoint)
         {
-            m_SessionId = sid;
+            SessionId = sid;
             m_UdpSender = udpSender;
             m_RemotePoint = remotePoint;
             m_SessionState = SessionState.Connected;
@@ -64,10 +76,57 @@ namespace KCPNet
             ct = cts.Token;
             Task.Run(BeginUpdateAsync, ct);
         }
-
         public void ReceiveData(byte[] buffer)
         {
             m_Kcp.Input(buffer.AsSpan());
+        }
+
+        public void SendMsg(T msg)
+        {
+            if (IsConnected)
+            {
+                byte[] bytes = KCPTool.Serialize(msg);
+                if (bytes != null)
+                {
+                    SendMsg(bytes);
+                }
+            }
+            else
+            {
+                KCPTool.Warning("Session没有连接，不能发消息");
+            }
+        }
+        /// <summary>
+        /// 如果是广播消息，则先序列化然后广播字节数组
+        /// </summary>
+        public void SendMsg(byte[] bytes)
+        {
+            if (IsConnected)
+            {
+                bytes = KCPTool.Compress(bytes);
+                m_Kcp.Send(bytes.AsSpan());
+            }
+            else
+            {
+                KCPTool.Warning("Session没有连接，不能发消息");
+            }
+        }
+        public void CloseSession()
+        {
+            cts.Cancel();
+            OnDisConnected();
+
+            OnSessionClose?.Invoke(SessionId);
+            OnSessionClose = null;
+
+            m_SessionState = SessionState.DisConnected;
+            m_RemotePoint = null;
+            m_UdpSender = null;
+            SessionId = 0;
+
+            m_Handle = null;
+            m_Kcp = null;
+            cts = null;
         }
 
         private async void BeginUpdateAsync()
@@ -104,64 +163,23 @@ namespace KCPNet
             }
         }
 
-        public void SendMsg(T msg)
-        {
-            if (IsConnected())
-            {
-                byte[] bytes = KCPTool.Serialize(msg);
-                if (bytes != null)
-                {
-                    SendMsg(bytes);
-                }
-            }
-            else
-            {
-                KCPTool.Warning("Session没有连接，不能发消息");
-            }
-        }
-
-        /// <summary>
-        /// 如果是广播消息，则先序列化然后广播字节数组
-        /// </summary>
-        public void SendMsg(byte[] bytes)
-        {
-            if (IsConnected())
-            {
-                bytes = KCPTool.Compress(bytes);
-                m_Kcp.Send(bytes.AsSpan());
-            }
-            else
-            {
-                KCPTool.Warning("Session没有连接，不能发消息");
-            }
-        }
-
-        public void CloseSession()
-        {
-            cts.Cancel();
-            OnDisConnected();
-
-            OnSessionClose?.Invoke(m_SessionId);
-            OnSessionClose = null;
-
-            m_SessionState = SessionState.DisConnected;
-            m_RemotePoint = null;
-            m_UdpSender = null;
-            m_SessionId = 0;
-
-            m_Handle = null;
-            m_Kcp = null;
-            cts = null;
-        }
-
-        protected abstract void OnConnected();
         protected abstract void OnUpdate(DateTime now);
+        protected abstract void OnConnected();
         protected abstract void OnReceiveMsg(T msg);
         protected abstract void OnDisConnected();
 
-        public bool IsConnected()
+        public override bool Equals(object obj)
         {
-            return m_SessionState == SessionState.Connected;
+            if (obj is KCPSession<T>)
+            {
+                KCPSession<T> us = obj as KCPSession<T>;
+                return SessionId == us.SessionId;
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return SessionId.GetHashCode();
         }
     }
 }

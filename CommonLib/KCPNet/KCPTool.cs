@@ -142,5 +142,12 @@ namespace KCPNet
                 }
             }
         }
+
+        private static readonly DateTime utcStart = new DateTime(1970, 1, 1);
+        public static ulong GetUtcStartMilliseconds()
+        {
+            TimeSpan timeSpan = DateTime.UtcNow - utcStart;
+            return (ulong)timeSpan.TotalMilliseconds;
+        }
     }
 }
