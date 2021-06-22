@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace KCPNet
 {
@@ -10,6 +12,15 @@ namespace KCPNet
     {
         private UdpClient udp;
         private IPEndPoint remotePoint;
+
+        private CancellationTokenSource cts;
+        private CancellationToken ct;
+
+        public KCPNet()
+        {
+            cts = new CancellationTokenSource();
+            ct = cts.Token;
+        }
 
         #region 客户端
         public T ClientSession;
@@ -19,6 +30,8 @@ namespace KCPNet
             udp = new UdpClient(0);
             remotePoint = new IPEndPoint(IPAddress.Parse(ip), port);
             KCPTool.ColorLog(ConsoleColor.Green, "Client Start...");
+
+            Task.Run(ClientReceive, ct);
         }
 
         public void ConnectServer()
@@ -33,6 +46,11 @@ namespace KCPNet
             {
                 try
                 {
+                    if (ct.IsCancellationRequested)
+                    {
+                        KCPTool.ColorLog(ConsoleColor.Cyan, "ClientReceive Task is Cancelled");
+                        break;
+                    }
                     result = await udp.ReceiveAsync();
 
                     if (Equals(remotePoint, result.RemoteEndPoint))
@@ -52,7 +70,7 @@ namespace KCPNet
                                 // 会话处理
                                 ClientSession = new T();
                                 ClientSession.InitSession(sid, SendUdpMsg, remotePoint);
-
+                                ClientSession.OnSessionClose = OnClientSessionClose;
                             }
                         }
                         else // 处理业务逻辑
@@ -69,6 +87,25 @@ namespace KCPNet
                 {
                     KCPTool.Warning($"Client Udp 接收异常:{e}");
                 }
+            }
+        }
+
+        private void OnClientSessionClose(uint sid)
+        {
+            cts.Cancel();
+            if (udp != null)
+            {
+                udp.Close();
+                udp = null;
+            }
+            KCPTool.Warning($"Client Session Close, sid:{sid}");
+        }
+
+        public void CloseClient()
+        {
+            if (ClientSession != null)
+            {
+                ClientSession.CloseSession();
             }
         }
         #endregion

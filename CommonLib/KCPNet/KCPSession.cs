@@ -19,9 +19,10 @@ namespace KCPNet
         Action<byte[], IPEndPoint> m_UdpSender;
         private IPEndPoint m_RemotePoint;
         protected SessionState m_SessionState = SessionState.None;
+        public Action<uint> OnSessionClose;
 
         private KCPHandle m_Handle;
-        public Kcp Kcp;
+        private Kcp m_Kcp;
 
         /// <param name="conv">conversation id</param>
         public void InitSession(uint sid, Action<byte[], IPEndPoint> udpSender, IPEndPoint remotePoint)
@@ -32,10 +33,10 @@ namespace KCPNet
             m_SessionState = SessionState.Connected;
 
             m_Handle = new KCPHandle();
-            Kcp = new Kcp(sid, m_Handle);
-            Kcp.NoDelay(1, 10, 2, 1);
-            Kcp.WndSize(64, 64);
-            Kcp.SetMtu(512);
+            m_Kcp = new Kcp(sid, m_Handle);
+            m_Kcp.NoDelay(1, 10, 2, 1);
+            m_Kcp.WndSize(64, 64);
+            m_Kcp.SetMtu(512);
 
             m_Handle.Out = (Memory<byte> buffer) =>
             {
@@ -43,6 +44,24 @@ namespace KCPNet
                 m_UdpSender(bytes, m_RemotePoint);
             };
         }
+
+        public void CloseSession()
+        {
+            OnDisConnected();
+
+            OnSessionClose?.Invoke(m_SessionId);
+            OnSessionClose = null;
+
+            m_SessionState = SessionState.DisConnected;
+            m_RemotePoint = null;
+            m_UdpSender = null;
+            m_SessionId = 0;
+
+            m_Handle = null;
+            m_Kcp = null;
+        }
+
+        protected abstract void OnDisConnected();
 
         public bool IsConnected()
         {
