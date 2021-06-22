@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f08ab21929fa8f7489bace25d41a0cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTestFixedMath: 1
+  IsTestFixedMath: 0
+  IsTestKCPNet: 1
 --- !u!4 &289177696
 Transform:
   m_ObjectHideFlags: 0
