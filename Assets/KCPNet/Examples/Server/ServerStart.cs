@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class ServerStart : MonoBehaviour
 {
-    public Text inputText;
+    public InputField inputText;
     public Button btnServerSend;
+    public Text logText;
 
     private KCPNet<ServerSession, NetMsg> server;
 
@@ -18,7 +19,7 @@ public class ServerStart : MonoBehaviour
         btnServerSend.onClick.AddListener(OnServerSend);
 
         string ip = "127.0.0.1";
-        KCPNet<ServerSession, NetMsg> server = new KCPNet<ServerSession, NetMsg>();
+        server = new KCPNet<ServerSession, NetMsg>();
         server.StartAsServer(ip, 17666);
         
     }
@@ -40,6 +41,11 @@ public class ServerStart : MonoBehaviour
         {
             Info = input
         });
-        Debug.Log($"服务端发送：{input}");
+        LogServerLogic($"服务端发送：{input}");
+    }
+
+    private void LogServerLogic(string s)
+    {
+        logText.text = $"{logText.text}\n{KCPTool.HandleLog(s)}";
     }
 }

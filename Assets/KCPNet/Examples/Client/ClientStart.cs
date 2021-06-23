@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public class ClientStart : MonoBehaviour
 {
-    public Text inputText;
+    public InputField inputText;
     public Button btnClientSend;
 
     private KCPNet<ClientSession, NetMsg> client;
@@ -17,7 +17,10 @@ public class ClientStart : MonoBehaviour
 
     private void Start()
     {
-        btnClientSend.onClick.AddListener(OnClientSend);
+        if (btnClientSend != null)
+        {
+            btnClientSend.onClick.AddListener(OnClientSend); 
+        }
 
         string ip = "127.0.0.1";
         client = new KCPNet<ClientSession, NetMsg>();
@@ -107,5 +110,10 @@ public class ClientStart : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void Close()
+    {
+        client.CloseClient();
     }
 }

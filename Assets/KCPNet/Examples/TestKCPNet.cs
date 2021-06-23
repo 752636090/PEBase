@@ -13,6 +13,11 @@ public class TestKCPNet : MonoBehaviour
         ExampleStart1();
     }
 
+    private void Update()
+    {
+        ExampleUpdate1();
+    }
+
     private string HandleLogMsg(string msg)
     {
         int threadId = Thread.CurrentThread.ManagedThreadId;
@@ -41,11 +46,29 @@ public class TestKCPNet : MonoBehaviour
         GameObject testUI = Instantiate(Resources.Load("KCPNetTestUI"), GameObject.Find("Canvas/Root").transform) as GameObject;
 
         ServerStart server = gameObject.AddComponent<ServerStart>();
-        server.inputText = testUI.transform.Find("inputServer/Text").GetComponent<Text>();
+        server.inputText = testUI.transform.Find("inputServer").GetComponent<InputField>();
         server.btnServerSend = testUI.transform.Find("btnServerSend").GetComponent<Button>();
+        server.logText = testUI.transform.Find("ScrollText/Panel/Text").GetComponent<Text>();
 
         ClientStart client = gameObject.AddComponent<ClientStart>();
-        client.inputText = testUI.transform.Find("inputClient/Text").GetComponent<Text>();
+        client.inputText = testUI.transform.Find("inputClient").GetComponent<InputField>();
         client.btnClientSend = testUI.transform.Find("btnClientSend").GetComponent<Button>();
+    }
+
+    private readonly Queue<ClientStart> tmpClientQueue = new Queue<ClientStart>();
+    private void ExampleUpdate1()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
+            if (Input.GetKeyUp(KeyCode.B))
+            {
+                tmpClientQueue.Enqueue(gameObject.AddComponent<ClientStart>());
+            }
+            else if (Input.GetKeyUp(KeyCode.C))
+            {
+                ClientStart client = tmpClientQueue.Dequeue();
+                client.Close();
+            }
+        }
     }
 }

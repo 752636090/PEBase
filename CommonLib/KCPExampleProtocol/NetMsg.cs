@@ -3,6 +3,7 @@ using System;
 
 namespace KCPExampleProtocol
 {
+    [Serializable]
     public class NetMsg : KCPMsg
     {
         public CMD CMD;

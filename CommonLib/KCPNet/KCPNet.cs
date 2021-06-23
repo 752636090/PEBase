@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,10 @@ namespace KCPNet
             sessionDic = new Dictionary<uint, T>();
 
             udp = new UdpClient(new IPEndPoint(IPAddress.Parse(ip), port));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                udp.Client.IOControl((IOControlCode)(-1744830452), new byte[] { 0, 0, 0, 0 }, null);
+            }
             remotePoint = new IPEndPoint(IPAddress.Parse(ip), port);
             KCPTool.ColorLog(ConsoleColor.Green, "Server Start...");
 
@@ -96,7 +101,7 @@ namespace KCPNet
                 lock (sessionDic)
                 {
                     sessionDic.Remove(sid);
-                    KCPTool.Warning($"Session:{0} remove form sessionDic.");
+                    KCPTool.Warning($"Session:{sid} remove form sessionDic.");
                 }
             }
             else
@@ -126,6 +131,10 @@ namespace KCPNet
         public void StartAsClient(string ip, int port)
         {
             udp = new UdpClient(0);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                udp.Client.IOControl((IOControlCode)(-1744830452), new byte[] { 0, 0, 0, 0 }, null);
+            }
             remotePoint = new IPEndPoint(IPAddress.Parse(ip), port);
             KCPTool.ColorLog(ConsoleColor.Green, "Client Start...");
 
@@ -248,6 +257,7 @@ namespace KCPNet
                 item.Value.SendMsg(bytes);
             }
         }
+        uint sid = 0;
         public uint GenerateUniqueSessionId()
         {
             lock (sessionDic)
@@ -256,7 +266,6 @@ namespace KCPNet
                 {
                     throw new Exception("sid满了");
                 }
-                uint sid = 0;
                 while (true)
                 {
                     ++sid;

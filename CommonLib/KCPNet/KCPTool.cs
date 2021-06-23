@@ -73,6 +73,11 @@ namespace KCPNet
             Console.WriteLine(msg);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+        public static string HandleLog(string s)
+        {
+            int threadId = Thread.CurrentThread.ManagedThreadId;
+            return $"Thread:{threadId} {s}";
+        }
 
         public static byte[] Serialize<T>(T msg) where T : KCPMsg
         {
