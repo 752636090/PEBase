@@ -34,9 +34,31 @@ namespace KCPNet
 
             Task.Run(ClientReceive, ct);
         }
-        public void ConnectServer()
+        public Task<bool> ConnectServer(int interval = 200, int maxIntervalSum = 5000)
         {
             SendUdpMsg(new byte[4], remotePoint);
+            int checkTimes = 0;
+            Task<bool> task = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(interval);
+                    checkTimes += interval;
+                    if (ClientSession != null && ClientSession.IsConnected)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if (checkTimes > maxIntervalSum)
+                        {
+                            return false;
+                        }
+                    } 
+                }
+            });
+
+            return task;
         }
         private async void ClientReceive()
         {

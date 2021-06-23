@@ -56,12 +56,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\KCPNet\Examples\Server\ServerStart.cs" />
+    <Compile Include="Assets\KCPNet\Examples\Client\ClientStart.cs" />
     <Compile Include="Assets\FixedMath\Examples\TestFixedMath.cs" />
+    <Compile Include="Assets\KCPNet\Examples\Client\ClientSession.cs" />
     <Compile Include="Assets\KCPNet\Examples\TestKCPNet.cs" />
     <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\KCPNet\Examples\Client\ClientStart.cs" />
-    <Compile Include="Assets\KCPNet\Examples\Server\ServerStart.cs" />
-    <Compile Include="Assets\KCPNet\Examples\Client\ClientSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll" />
@@ -302,6 +302,9 @@
     <Reference Include="System.Memory">
       <HintPath>Assets\KCPNet\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="KCPExampleProtocol">
+      <HintPath>Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Assets\KCPNet\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -319,9 +322,6 @@
     </Reference>
     <Reference Include="System.Numerics.Vectors">
       <HintPath>Assets\KCPNet\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="KCPExampleProtocol">
-      <HintPath>Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

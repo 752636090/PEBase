@@ -20,7 +20,7 @@ public class ClientStart : MonoBehaviour
         string ip = "127.0.0.1";
         client = new KCPNet<ClientSession, NetMsg>();
         client.StartAsClient(ip, 17666);
-        client.ConnectServer();
+        client.ConnectServer(200, 5000);
     }
 
     private void Update()
