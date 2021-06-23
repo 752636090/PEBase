@@ -38,10 +38,14 @@ public class TestKCPNet : MonoBehaviour
             Debug.LogError(HandleLogMsg(s));
         };
 
-        ClientStart client = gameObject.AddComponent<ClientStart>();
-        ServerStart server = gameObject.AddComponent<ServerStart>();
         GameObject testUI = Instantiate(Resources.Load("KCPNetTestUI"), GameObject.Find("Canvas/Root").transform) as GameObject;
-        client.text = testUI.transform.Find("ScrollText/Panel/Text").GetComponent<Text>();
+
+        ServerStart server = gameObject.AddComponent<ServerStart>();
+        server.inputText = testUI.transform.Find("inputServer/Text").GetComponent<Text>();
+        server.btnServerSend = testUI.transform.Find("btnServerSend").GetComponent<Button>();
+
+        ClientStart client = gameObject.AddComponent<ClientStart>();
+        client.inputText = testUI.transform.Find("inputClient/Text").GetComponent<Text>();
         client.btnClientSend = testUI.transform.Find("btnClientSend").GetComponent<Button>();
     }
 }

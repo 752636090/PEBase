@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 public class ClientStart : MonoBehaviour
 {
-    public Text text;
+    public Text inputText;
     public Button btnClientSend;
 
-    private static KCPNet<ClientSession, NetMsg> client;
-    private static Task<bool> checkTask = null;
+    private KCPNet<ClientSession, NetMsg> client;
+    private Task<bool> checkTask = null;
 
     private void Start()
     {
@@ -33,8 +33,8 @@ public class ClientStart : MonoBehaviour
 
     public void OnClientSend()
     {
-        string input = text.text;
-        text.text = string.Empty;
+        string input = inputText.text;
+        inputText.text = string.Empty;
         if (input == string.Empty)
         {
             return;

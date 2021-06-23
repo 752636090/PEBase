@@ -41,7 +41,6 @@ namespace KCPNet
 
             Task.Run(ServerReceive, ct);
         }
-
         private async void ServerReceive()
         {
             UdpReceiveResult result;
@@ -90,7 +89,6 @@ namespace KCPNet
                 }
             }
         }
-
         private void OnServerSessionClose(uint sid)
         {
             if (sessionDic.ContainsKey(sid))
@@ -104,6 +102,21 @@ namespace KCPNet
             else
             {
                 KCPTool.Error($"Session:{sid} cannot find in sessionDic");
+            }
+        }
+        public void CloseServer()
+        {
+            foreach (KeyValuePair<uint, T> item in sessionDic)
+            {
+                item.Value.CloseSession();
+            }
+            sessionDic = null;
+
+            if (udp != null)
+            {
+                udp.Close();
+                udp = null;
+                cts.Cancel();
             }
         }
         #endregion
@@ -144,7 +157,6 @@ namespace KCPNet
 
             return task;
         }
-
         private async void ClientReceive()
         {
             UdpReceiveResult result;
@@ -228,7 +240,14 @@ namespace KCPNet
                 udp.SendAsync(bytes, bytes.Length, remotePoint);
             }
         }
-
+        public void BroadcastMsg(K msg)
+        {
+            byte[] bytes = KCPTool.Serialize<K>(msg);
+            foreach (KeyValuePair<uint, T> item in sessionDic)
+            {
+                item.Value.SendMsg(bytes);
+            }
+        }
         public uint GenerateUniqueSessionId()
         {
             lock (sessionDic)

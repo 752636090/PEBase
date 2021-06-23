@@ -62,6 +62,7 @@
     <Compile Include="Assets\KCPNet\Examples\Client\ClientSession.cs" />
     <Compile Include="Assets\KCPNet\Examples\TestKCPNet.cs" />
     <Compile Include="Assets\Test.cs" />
+    <Compile Include="Assets\KCPNet\Examples\Server\ServerSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll" />
