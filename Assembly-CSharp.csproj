@@ -52,26 +52,36 @@
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.10f1c1</UnityVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="Assets\KCPNet\ThirdDll\System.Buffers.dll" />
+    <Analyzer Include="Assets\KCPNet\ThirdDll\System.Numerics.Vectors.dll" />
+    <Analyzer Include="Assets\KCPNet\ThirdDll\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Analyzer Include="Assets\KCPNet\ThirdDll\System.Memory.dll" />
+    <Analyzer Include="Assets\KCPNet\ThirdDll\Kcp.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\KCPNet\Examples\Server\ServerSession.cs" />
     <Compile Include="Assets\KCPNet\Examples\Server\ServerStart.cs" />
     <Compile Include="Assets\KCPNet\Examples\Client\ClientStart.cs" />
     <Compile Include="Assets\FixedMath\Examples\TestFixedMath.cs" />
     <Compile Include="Assets\KCPNet\Examples\Client\ClientSession.cs" />
     <Compile Include="Assets\KCPNet\Examples\TestKCPNet.cs" />
     <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\KCPNet\Examples\Server\ServerSession.cs" />
+    <Compile Include="Assets\KCPNet\Examples\UnityClient\NetSvc.cs" />
+    <Compile Include="Assets\KCPNet\Examples\UnityClient\UnitySession.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll" />
-    <None Include="Assets\KCPNet\System.Runtime.CompilerServices.Unsafe.dll" />
-    <None Include="Assets\KCPNet\System.Buffers.dll" />
+    <None Include="Assets\KCPNet\ThirdDll\System.Runtime.CompilerServices.Unsafe.dll" />
+    <None Include="Assets\KCPNet\ThirdDll\System.Buffers.dll" />
     <None Include="Assets\FixedMath\netstandard2.0\FixedMath.dll" />
-    <None Include="Assets\KCPNet\System.Memory.dll" />
-    <None Include="Assets\KCPNet\Kcp.dll" />
-    <None Include="Assets\KCPNet\System.Numerics.Vectors.dll" />
+    <None Include="Assets\KCPNet\ThirdDll\System.Memory.dll" />
+    <None Include="Assets\KCPNet\ThirdDll\Kcp.dll" />
+    <None Include="Assets\KCPNet\ThirdDll\System.Numerics.Vectors.dll" />
     <None Include="Assets\KCPNet\netstandard2.0\KCPNet.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -297,23 +307,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Kcp">
-      <HintPath>Assets\KCPNet\Kcp.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Assets\KCPNet\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="KCPExampleProtocol">
       <HintPath>Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets\KCPNet\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="KCPNet">
       <HintPath>Assets\KCPNet\netstandard2.0\KCPNet.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Assets\KCPNet\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="FixedMath">
       <HintPath>Assets\FixedMath\netstandard2.0\FixedMath.dll</HintPath>
@@ -321,8 +319,20 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\KCPNet\ThirdDll\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\KCPNet\ThirdDll\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Kcp">
+      <HintPath>Assets\KCPNet\ThirdDll\Kcp.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics.Vectors">
-      <HintPath>Assets\KCPNet\System.Numerics.Vectors.dll</HintPath>
+      <HintPath>Assets\KCPNet\ThirdDll\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\KCPNet\ThirdDll\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

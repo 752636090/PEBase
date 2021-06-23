@@ -140,6 +140,7 @@ namespace KCPNet
                     if (ct.IsCancellationRequested)
                     {
                         KCPTool.ColorLog(ConsoleColor.Cyan, "SessionUpdate Task is Cancelled.");
+                        break;
                     }
                     else
                     {

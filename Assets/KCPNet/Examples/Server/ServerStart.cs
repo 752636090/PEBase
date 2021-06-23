@@ -16,12 +16,20 @@ public class ServerStart : MonoBehaviour
 
     private void Start()
     {
-        btnServerSend.onClick.AddListener(OnServerSend);
+        if (btnServerSend != null)
+        {
+            btnServerSend.onClick.AddListener(OnServerSend); 
+        }
 
         string ip = "127.0.0.1";
         server = new KCPNet<ServerSession, NetMsg>();
         server.StartAsServer(ip, 17666);
         
+    }
+
+    private void OnApplicationQuit()
+    {
+        server.CloseServer();
     }
 
     private void OnServerSend()

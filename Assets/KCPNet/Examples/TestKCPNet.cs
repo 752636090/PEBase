@@ -10,14 +10,15 @@ public class TestKCPNet : MonoBehaviour
 {
     private void Start()
     {
-        ExampleStart1();
+        ExampleStart2();
     }
 
     private void Update()
     {
-        ExampleUpdate1();
+        //ExampleUpdate1();
     }
 
+    #region Example1
     private string HandleLogMsg(string msg)
     {
         int threadId = Thread.CurrentThread.ManagedThreadId;
@@ -71,4 +72,32 @@ public class TestKCPNet : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Example2
+    private void ExampleStart2()
+    {
+        #region 主要为了打印服务端日志
+        KCPTool.LogFunc = (string s) =>
+        {
+            Debug.Log(HandleLogMsg(s));
+        };
+        KCPTool.ColorLogFunc = (ConsoleColor color, string s) =>
+        {
+            Debug.Log(HandleLogMsg(s));
+        };
+        KCPTool.WarningFunc = (string s) =>
+        {
+            Debug.LogWarning(HandleLogMsg(s));
+        };
+        KCPTool.ErrorFunc = (string s) =>
+        {
+            Debug.LogError(HandleLogMsg(s));
+        }; 
+        #endregion
+        ServerStart server = gameObject.AddComponent<ServerStart>();
+
+        gameObject.AddComponent<NetSvc>();
+    }
+    #endregion
 }

@@ -34,6 +34,11 @@ public class ClientStart : MonoBehaviour
         
     }
 
+    private void OnApplicationQuit()
+    {
+        client.CloseClient();
+    }
+
     public void OnClientSend()
     {
         string input = inputText.text;
