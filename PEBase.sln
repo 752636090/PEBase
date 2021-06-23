@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixedMath", "CommonLib\Fixe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCPNet", "CommonLib\KCPNet\KCPNet.csproj", "{0E542DCE-CD75-4EC2-8C9F-EB02C6DACFAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCPExampleProtocol", "CommonLib\KCPExampleProtocol\KCPExampleProtocol.csproj", "{B96043B5-BA47-439A-AE2E-F0B648AC2C45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCPExampleProtocol", "CommonLib\Examples\KCPExampleProtocol\KCPExampleProtocol.csproj", "{B96043B5-BA47-439A-AE2E-F0B648AC2C45}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{6AFAF644-8093-4176-8B53-E68E8AB16B5A}"
 EndProject
