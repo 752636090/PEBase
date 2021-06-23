@@ -31,7 +31,7 @@ public class TestKCPNet : MonoBehaviour
         };
         KCPTool.WarningFunc = (string s) =>
         {
-            Debug.LogError(HandleLogMsg(s));
+            Debug.LogWarning(HandleLogMsg(s));
         };
         KCPTool.ErrorFunc = (string s) =>
         {

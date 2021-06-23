@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KCPNet
 {
-    public class KCPNet<T, K> 
+    public class KCPNet<T, K>
         where T : KCPSession<K>, new()
         where K : KCPMsg, new()
     {
@@ -23,6 +23,90 @@ namespace KCPNet
             cts = new CancellationTokenSource();
             ct = cts.Token;
         }
+
+        #region 服务端
+        private Dictionary<uint, T> sessionDic = null;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port">监听用的端口</param>
+        public void StartAsServer(string ip, int port)
+        {
+            sessionDic = new Dictionary<uint, T>();
+
+            udp = new UdpClient(new IPEndPoint(IPAddress.Parse(ip), port));
+            remotePoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            KCPTool.ColorLog(ConsoleColor.Green, "Server Start...");
+
+            Task.Run(ServerReceive, ct);
+        }
+
+        private async void ServerReceive()
+        {
+            UdpReceiveResult result;
+            while (true)
+            {
+                try
+                {
+                    if (ct.IsCancellationRequested)
+                    {
+                        KCPTool.ColorLog(ConsoleColor.Cyan, "ServerReceive Task is Cancelled");
+                        break;
+                    }
+                    result = await udp.ReceiveAsync();
+
+                    uint sid = BitConverter.ToUInt32(result.Buffer, 0);
+                    if (sid == 0) // sid数据
+                    {
+                        sid = GenerateUniqueSessionId();
+                        byte[] sidBytes = BitConverter.GetBytes(sid);
+                        byte[] convBytes = new byte[8];
+                        Array.Copy(sidBytes, 0, convBytes, 4, 4);
+                        SendUdpMsg(convBytes, result.RemoteEndPoint);
+                    }
+                    else // 处理业务逻辑
+                    {
+                        if (!sessionDic.TryGetValue(sid, out T session)) // 获取sid之后第一次通信
+                        {
+                            session = new T();
+                            session.InitSession(sid, SendUdpMsg, result.RemoteEndPoint);
+                            session.OnSessionClose = OnServerSessionClose;
+                            lock (sessionDic)
+                            {
+                                sessionDic.Add(sid, session);
+                            }
+                        }
+                        else
+                        {
+                            session = sessionDic[sid];
+                        }
+                        session.ReceiveData(result.Buffer);
+                    }
+                }
+                catch (Exception e)
+                {
+                    KCPTool.Warning($"Server Udp 接收异常:{e}");
+                }
+            }
+        }
+
+        private void OnServerSessionClose(uint sid)
+        {
+            if (sessionDic.ContainsKey(sid))
+            {
+                lock (sessionDic)
+                {
+                    sessionDic.Remove(sid);
+                    KCPTool.Warning($"Session:{0} remove form sessionDic.");
+                }
+            }
+            else
+            {
+                KCPTool.Error($"Session:{sid} cannot find in sessionDic");
+            }
+        }
+        #endregion
 
         #region 客户端
         public T ClientSession;
@@ -54,12 +138,13 @@ namespace KCPNet
                         {
                             return false;
                         }
-                    } 
+                    }
                 }
             });
 
             return task;
         }
+
         private async void ClientReceive()
         {
             UdpReceiveResult result;
@@ -141,6 +226,31 @@ namespace KCPNet
             if (udp != null)
             {
                 udp.SendAsync(bytes, bytes.Length, remotePoint);
+            }
+        }
+
+        public uint GenerateUniqueSessionId()
+        {
+            lock (sessionDic)
+            {
+                if ((uint)sessionDic.Count == uint.MaxValue)
+                {
+                    throw new Exception("sid满了");
+                }
+                uint sid = 0;
+                while (true)
+                {
+                    ++sid;
+                    if (sid == uint.MaxValue)
+                    {
+                        sid = 1;
+                    }
+                    if (!sessionDic.ContainsKey(sid))
+                    {
+                        break;
+                    }
+                }
+                return sid;
             }
         }
     }
