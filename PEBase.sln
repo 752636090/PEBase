@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCPExampleProtocol", "Commo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{6AFAF644-8093-4176-8B53-E68E8AB16B5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLog", "CommonLib\CommonLog\CommonLog.csproj", "{32F0D8E2-5029-491A-B13B-DE6534E46471}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLog", "CommonLib\CommonLog\CommonLog.csproj", "{32F0D8E2-5029-491A-B13B-DE6534E46471}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerLogTest", "CommonLib\Examples\ServerLogTest\ServerLogTest.csproj", "{EA674129-5F47-4BF4-8572-7C134D0A8BE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,11 +41,16 @@ Global
 		{32F0D8E2-5029-491A-B13B-DE6534E46471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F0D8E2-5029-491A-B13B-DE6534E46471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32F0D8E2-5029-491A-B13B-DE6534E46471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA674129-5F47-4BF4-8572-7C134D0A8BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA674129-5F47-4BF4-8572-7C134D0A8BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA674129-5F47-4BF4-8572-7C134D0A8BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA674129-5F47-4BF4-8572-7C134D0A8BE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B96043B5-BA47-439A-AE2E-F0B648AC2C45} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
+		{EA674129-5F47-4BF4-8572-7C134D0A8BE2} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
 	EndGlobalSection
 EndGlobal

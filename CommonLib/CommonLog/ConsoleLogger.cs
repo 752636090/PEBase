@@ -21,7 +21,7 @@ namespace Utils
             WriteConsoleLog(msg, ConsoleColor.DarkYellow);
         }
 
-        private void WriteConsoleLog(string msg, ConsoleColor color)
+        private void WriteConsoleLog(string msg, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(msg);

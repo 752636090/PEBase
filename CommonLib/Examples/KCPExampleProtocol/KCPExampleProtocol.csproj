@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KCPNet\KCPNet.csproj">
+    <ProjectReference Include="..\..\KCPNet\KCPNet.csproj">
       <Private>false</Private>
     </ProjectReference>
   </ItemGroup>

@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll" />
+    <None Include="Assets\CommonLog\netstandard2.0\CommonLog.dll" />
     <None Include="Assets\KCPNet\ThirdDll\System.Runtime.CompilerServices.Unsafe.dll" />
     <None Include="Assets\KCPNet\ThirdDll\System.Buffers.dll" />
     <None Include="Assets\FixedMath\netstandard2.0\FixedMath.dll" />
@@ -325,6 +326,9 @@
     </Reference>
     <Reference Include="System.Numerics.Vectors">
       <HintPath>Assets\KCPNet\ThirdDll\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonLog">
+      <HintPath>Assets\CommonLog\netstandard2.0\CommonLog.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
