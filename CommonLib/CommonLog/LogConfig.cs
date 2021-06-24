@@ -4,12 +4,6 @@ using System.Text;
 
 namespace Utils
 {
-    public enum LogType
-    {
-        Unity,
-        Console
-    }
-
     public class LogConfig
     {
         public bool EnableLog = true;
