@@ -93,7 +93,125 @@ namespace Utils
                 WriteToFile($"[L]{msg}");
             }
         }
+        public static void Log(object obj)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            string msg = DecorateLog(obj.ToString());
+            logger.Log(msg);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[L]{msg}");
+            }
+        }
+        public static void ColorLog(ConsoleColor color, string msg, params object[] args)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            msg = DecorateLog(string.Format(msg, args));
+            logger.Log(msg, color);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[L]{msg}");
+            }
+        }
+        public static void ColorLog(ConsoleColor color, object obj)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            string msg = DecorateLog(obj.ToString());
+            logger.Log(msg, color);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[L]{msg}");
+            }
+        }
+        public static void Trace(string msg, params object[] args)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            msg = DecorateLog(string.Format(msg, args));
+            logger.Log(msg, ConsoleColor.Magenta);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[T]{msg}");
+            }
+        }
+        public static void Trace(object obj)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            string msg = DecorateLog(obj.ToString());
+            logger.Log(msg, ConsoleColor.Magenta);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[T]{msg}");
+            }
+        }
+        public static void Warning(string msg, params object[] args)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            msg = DecorateLog(string.Format(msg, args));
+            logger.Waring(msg);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[W]{msg}");
+            }
+        }
+        public static void Warning(object obj)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            string msg = DecorateLog(obj.ToString());
+            logger.Waring(msg);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[W]{msg}");
+            }
+        }
+        public static void Error(string msg, params object[] args)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            msg = DecorateLog(string.Format(msg, args));
+            logger.Error(msg);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[E]{msg}");
+            }
+        }
+        public static void Error(object obj)
+        {
+            if (!LogConfig.EnableLog)
+            {
+                return;
+            }
+            string msg = DecorateLog(obj.ToString());
+            logger.Error(msg);
+            if (LogConfig.EnableSave)
+            {
+                WriteToFile($"[E]{msg}");
+            }
+        }
 
+        #region Tool
         private static string DecorateLog(string msg, bool isTrace = false)
         {
             StringBuilder sb = new StringBuilder(LogConfig.LogPrefix, 100);
@@ -146,6 +264,7 @@ namespace Utils
                     LogFileWriter = null;
                 }
             }
-        }
+        } 
+        #endregion
     }
 }
