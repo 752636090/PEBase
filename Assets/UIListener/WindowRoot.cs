@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class WindowRoot : MonoBehaviour
 {
-    protected void RegisterClick(GameObject go, Action<PointerEventData> onClick)
+    protected void RegisterClick(GameObject go, Action<PointerEventData, object[]> onClick, params object[] args)
     {
         UIListener listener = go.GetComponent<UIListener>();
         if (listener == null)
@@ -14,5 +14,9 @@ public class WindowRoot : MonoBehaviour
             listener = go.AddComponent<UIListener>();
         }
         listener.OnPointerClickAction = onClick;
+        if (args != null)
+        {
+            listener.Args = args;
+        }
     }
 }
