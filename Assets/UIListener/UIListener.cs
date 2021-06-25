@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIListener : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IScrollHandler, IInitializePotentialDragHandler
+public class UIListener : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IDragHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IScrollHandler, IInitializePotentialDragHandler
 {
     public Action<PointerEventData, GameObject, object[]> OnPointerClickAction;
     public Action<PointerEventData, GameObject, object[]> OnDragAction;
@@ -25,14 +25,19 @@ public class UIListener : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
         OnPointerClickAction?.Invoke(eventData, gameObject, Args);
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnPointerDownAction?.Invoke(eventData, gameObject, Args);
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         OnDragAction?.Invoke(eventData, gameObject, Args);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-        OnPointerDownAction?.Invoke(eventData, gameObject, Args);
+        OnPointerUpAction?.Invoke(eventData, gameObject, Args);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -43,11 +48,6 @@ public class UIListener : MonoBehaviour, IPointerClickHandler, IPointerDownHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         OnPointerExistAction?.Invoke(eventData, gameObject, Args);
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        OnPointerUpAction?.Invoke(eventData, gameObject, Args);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
