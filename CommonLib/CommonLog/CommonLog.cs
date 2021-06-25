@@ -182,7 +182,7 @@ namespace Utils
             {
                 return;
             }
-            msg = DecorateLog(string.Format(msg, args));
+            msg = DecorateLog(string.Format(msg, args), true);
             logger.Log(msg, ConsoleColor.Magenta);
             if (LogConfig.EnableSave)
             {
@@ -195,7 +195,7 @@ namespace Utils
             {
                 return;
             }
-            string msg = DecorateLog(obj.ToString());
+            string msg = DecorateLog(obj.ToString(), true);
             logger.Log(msg, ConsoleColor.Magenta);
             if (LogConfig.EnableSave)
             {
@@ -234,7 +234,7 @@ namespace Utils
             {
                 return;
             }
-            msg = DecorateLog(string.Format(msg, args));
+            msg = DecorateLog(string.Format(msg, args), true);
             logger.Error(msg);
             if (LogConfig.EnableSave)
             {
@@ -247,7 +247,7 @@ namespace Utils
             {
                 return;
             }
-            string msg = DecorateLog(obj.ToString());
+            string msg = DecorateLog(obj.ToString(), true);
             logger.Error(msg);
             if (LogConfig.EnableSave)
             {
