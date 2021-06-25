@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsTestFixedMath: 0
-  IsTestKCPNet: 1
+  IsTestKCPNet: 0
+  IsTestCommonLog: 1
 --- !u!4 &289177696
 Transform:
   m_ObjectHideFlags: 0

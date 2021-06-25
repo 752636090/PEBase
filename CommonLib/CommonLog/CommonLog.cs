@@ -88,7 +88,11 @@ namespace Utils
                         if (File.Exists(path))
                         {
                             FileInfo file = new FileInfo(path);
-                            file.CopyTo($"{LogConfig.SavePath}_Old_{file.LastWriteTime.ToString("yyyyMMdd@HH-mm")}_{LogConfig.SaveName}");
+                            if (!Directory.Exists($"{LogConfig.SavePath}\\Old\\"))
+                            {
+                                Directory.CreateDirectory($"{LogConfig.SavePath}\\Old\\");
+                            }
+                            file.CopyTo($"{LogConfig.SavePath}\\Old\\{file.LastWriteTime.ToString("yyyyMMdd@HH-mm")}_{LogConfig.SaveName}");
                             File.Delete(path);
                         }
                     }

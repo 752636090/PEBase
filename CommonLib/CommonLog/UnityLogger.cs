@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Utils
@@ -7,23 +8,34 @@ namespace Utils
     class UnityLogger : ILogger
     {
         private Type type = Type.GetType("UnityEngine.Debug, UnityEngine");
+        private MethodInfo logMethod;
+        private MethodInfo warningMethod;
+        private MethodInfo errorMethod;
+
+        public UnityLogger()
+        {
+            logMethod = type.GetMethod("Log", new Type[] { typeof(object) });
+            warningMethod = type.GetMethod("LogWarning", new Type[] { typeof(object) });
+            errorMethod = type.GetMethod("LogError", new Type[] { typeof(object) });
+        }
+
         public void Log(string msg, ConsoleColor color = ConsoleColor.Gray)
         {
             if (color != ConsoleColor.Gray)
             {
                 msg = ColorUnityLog(msg, color);
             }
-            type.GetMethod("Log", new Type[] { typeof(object) }).Invoke(null, new object[] { msg });
+            logMethod.Invoke(null, new object[] { msg });
         }
 
         public void Waring(string msg)
         {
-            type.GetMethod("LogWarning", new Type[] { typeof(object) }).Invoke(null, new object[] { msg });
+            warningMethod.Invoke(null, new object[] { msg });
         }
 
         public void Error(string msg)
         {
-            type.GetMethod("LogError", new Type[] { typeof(object) }).Invoke(null, new object[] { msg });
+            errorMethod.Invoke(null, new object[] { msg });
         }
 
         private string ColorUnityLog(string msg, ConsoleColor color = ConsoleColor.Black)
