@@ -4,6 +4,50 @@ using System.IO;
 using System.Text;
 using System.Threading;
 
+public static class ExtentionMethods
+{
+    public static void Log(this object obj, string log, params object[] args)
+    {
+        Utils.CommonLog.Log(string.Format(log, args));
+    }
+    public static void Log(this object obj, object log)
+    {
+        Utils.CommonLog.Log(log);
+    }
+    public static void ColorLog(this object obj, ConsoleColor color, string log, params object[] args)
+    {
+        Utils.CommonLog.ColorLog(color, string.Format(log, args));
+    }
+    public static void ColorLog(this object obj, ConsoleColor color, object log)
+    {
+        Utils.CommonLog.ColorLog(color, log);
+    }
+    public static void Trace(this object obj, string log, params object[] args)
+    {
+        Utils.CommonLog.Trace(string.Format(log, args));
+    }
+    public static void Trace(this object obj, object log)
+    {
+        Utils.CommonLog.Trace(log);
+    }
+    public static void Warning(this object obj, string log, params object[] args)
+    {
+        Utils.CommonLog.Warning(string.Format(log, args));
+    }
+    public static void Warning(this object obj, object log)
+    {
+        Utils.CommonLog.Warning(log);
+    }
+    public static void Error(this object obj, string log, params object[] args)
+    {
+        Utils.CommonLog.Error(string.Format(log, args));
+    }
+    public static void Error(this object obj, object log)
+    {
+        Utils.CommonLog.Error(log);
+    }
+}
+
 namespace Utils
 {
     public static class CommonLog
