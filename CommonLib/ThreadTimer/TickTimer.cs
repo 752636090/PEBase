@@ -12,7 +12,7 @@ namespace ThreadTimer
     public class TickTimer : ThreadTimerBase
     {
         private readonly DateTime startDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        private readonly ConcurrentDictionary<int, TickTask> taskDic;
+        private readonly ConcurrentDictionary<int, TickTask> taskDic; // 线程安全，并且可在遍历中移除元素
 
         private readonly Thread timerThread;
 
@@ -46,7 +46,8 @@ namespace ThreadTimer
         {
             int tid = GenerateTaskId();
             double startTime = GetUtcMilliseconds();
-            TickTask task = new TickTask(tid, delayTime, count, startTime, onDo, onCancel, startTime);
+            double destTime = startTime + delayTime;
+            TickTask task = new TickTask(tid, delayTime, count, destTime, onDo, onCancel, startTime);
             if (taskDic.TryAdd(tid, task))
             {
                 return tid;
@@ -83,7 +84,49 @@ namespace ThreadTimer
 
         public void UpdateTask()
         {
+            double nowTime = GetUtcMilliseconds();
+            foreach (KeyValuePair<int, TickTask> item in taskDic)
+            {
+                TickTask task = item.Value;
+                if (nowTime < task.DestinationTime)
+                {
+                    continue;
+                }
 
+                ++task.CurrLoopIndex;
+                if (task.Count-- > 0)
+                {
+                    if (task.Count == 0)
+                    {
+                        FinishTask(task.TaskId);
+                    }
+                    else
+                    {
+                        task.DestinationTime = task.StartTime + task.DelayTime * (task.CurrLoopIndex + 1);
+                        CallDo(task.TaskId, task.OnDo);
+                    }
+                }
+                else
+                {
+                    task.DestinationTime = task.StartTime + task.DelayTime * (task.CurrLoopIndex + 1);
+                    CallDo(task.TaskId, task.OnDo);
+                }
+            }
+        }
+
+        private void FinishTask(int taskId)
+        {
+            // 线程安全字典，遍历过程中删除无影响
+            if (taskDic.TryRemove(taskId, out TickTask task))
+            {
+                CallDo(taskId, task.OnDo);
+                task.OnDo = null;
+            }
+        }
+
+        private void CallDo(int taskId, Action<int> onDo)
+        {
+            onDo.Invoke(taskId);
         }
 
         private double GetUtcMilliseconds()
@@ -107,6 +150,7 @@ namespace ThreadTimer
             public Action<int> OnCancel;
 
             public double StartTime;
+            public ulong CurrLoopIndex; // 代替在循环中加时间，防止累积偏差
 
             public TickTask(int taskId, uint delayTime, int count, double destinationTime, 
                 Action<int> onDo, Action<int> onCancel, double startTime)
@@ -118,6 +162,8 @@ namespace ThreadTimer
                 OnDo = onDo;
                 OnCancel = onCancel;
                 StartTime = startTime;
+
+                CurrLoopIndex = 0;
             }
         }
     }
