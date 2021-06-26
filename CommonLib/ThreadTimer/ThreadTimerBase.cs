@@ -4,6 +4,10 @@ namespace ThreadTimer
 {
     public abstract class ThreadTimerBase
     {
+        public Action<string> LogAction;
+        public Action<string> LogWarningAction;
+        public Action<string> LogErrorAction;
+
         /// <summary>
         /// 创建定时任务
         /// </summary>
