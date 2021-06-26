@@ -9,12 +9,13 @@ public class Test : MonoBehaviour
     public bool IsTestKCPNet;
     public bool IsTestCommonLog;
     public bool IsTestUIListener;
+    public bool IsTestJoystick;
 
     private void Awake()
     {
         if (IsTestFixedMath) gameObject.AddComponent<TestFixedMath>();
         if (IsTestKCPNet) gameObject.AddComponent<TestKCPNet>();
         if (IsTestCommonLog) gameObject.AddComponent<TestCommonLog>();
-        if (IsTestUIListener) gameObject.AddComponent<TestUIListener>();
+        if (IsTestJoystick) gameObject.AddComponent<TestJoystick>();
     }
 }

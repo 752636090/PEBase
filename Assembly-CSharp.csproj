@@ -70,6 +70,8 @@
     <Compile Include="Assets\UIListener\UIListener.cs" />
     <Compile Include="Assets\UIListener\WindowRoot.cs" />
     <Compile Include="Assets\UIListener\Examples\WindowTestUIListener.cs" />
+    <Compile Include="Assets\Joystick\Examples\TestJoystick.cs" />
+    <Compile Include="Assets\Joystick\Examples\UIJoystickExample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\KCPNet\Examples\netstandard2.0\KCPExampleProtocol.dll" />
