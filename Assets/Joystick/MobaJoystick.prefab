@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d78c29d4969f0741a841fea3b93ba89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
   imgTouch: {fileID: 470218661155144374}
   imgDirBg: {fileID: 2527730199023115767}
   imgDirPoint: {fileID: 973989448975791302}

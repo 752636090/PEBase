@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class UIMobaJoystick : WindowRoot
 {
+    private Transform testObjTrans;
+    public float speed;
+
     public Image imgTouch;
     public Image imgDirBg;
     public Image imgDirPoint;
-    public Image imgDirPointRefer;
     public Transform ArrowRoot;
 
     private Vector2 startPos = Vector2.zero;
@@ -24,12 +26,23 @@ public class UIMobaJoystick : WindowRoot
 
     private void Start()
     {
+        testObjTrans = (Instantiate(Resources.Load("Prefabs/Sphere")) as GameObject).transform;
         ArrowRoot.gameObject.SetActive(false);
         defaultPos = imgDirBg.transform.position;
-        //Debug.Log(imgDirBg.rectTransform.TransformPoint(0.5f, 0, 0));
-        //Debug.Log(imgDirPoint.rectTransform.TransformPoint(0.5f, 0, 0));
-        MConstDefine.PointDis =  imgDirPointRefer.transform.position.x - imgDirBg.transform.position.x;
+        MConstDefine.PointDis = (imgDirBg.mainTexture.width - imgDirPoint.mainTexture.width) / 2f
+            * Screen.height / ClientConfig.ScreenStandardHeight;
         RegisterMoveEvent();
+    }
+
+    private Vector3 dir;
+    private void Update()
+    {
+        if (dir != Vector3.zero)
+        {
+            Vector3 pos = speed * Time.deltaTime * dir;
+            Debug.Log(pos);
+            testObjTrans.position += pos;
+        }
     }
 
     private void RegisterMoveEvent()
@@ -81,6 +94,12 @@ public class UIMobaJoystick : WindowRoot
 
     private void InputMoveKey(Vector2 dir)
     {
-        Debug.Log($"Input Dir:{dir}");
+        this.dir = dir;
+    }
+
+    static class ClientConfig
+    {
+        public const int ScreenStandardWidth = 1280;
+        public const int ScreenStandardHeight = 720;
     }
 }
