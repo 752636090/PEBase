@@ -2,7 +2,7 @@
 
 namespace ThreadTimer
 {
-    public abstract class TheadTimerBase
+    public abstract class ThreadTimerBase
     {
         /// <summary>
         /// 创建定时任务
