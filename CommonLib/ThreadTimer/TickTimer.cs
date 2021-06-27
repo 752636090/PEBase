@@ -11,15 +11,33 @@ namespace ThreadTimer
     /// </summary>
     public class TickTimer : ThreadTimerBase
     {
+        class TickTaskPack
+        {
+            public int TaskId;
+            public Action<int> OnDo;
+            public TickTaskPack(int taskId, Action<int> onDo)
+            {
+                TaskId = taskId;
+                OnDo = onDo;
+            }
+        }
+
         private readonly DateTime startDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
         private readonly ConcurrentDictionary<int, TickTask> taskDic; // 线程安全，并且可在遍历中移除元素
+        private readonly bool setHandle;
+        private readonly ConcurrentQueue<TickTaskPack> packQueue;
+        private const string tidLock = "tidLock";
 
         private readonly Thread timerThread;
 
-        public TickTimer(int interval = 0)
+        public TickTimer(int interval = 0, bool setHandle = true)
         {
             taskDic = new ConcurrentDictionary<int, TickTask>();
-            
+            this.setHandle = setHandle;
+            if (setHandle)
+            {
+                packQueue = new ConcurrentQueue<TickTaskPack>();
+            }
             if (interval != 0)
             {
                 void StartTick()
@@ -63,7 +81,14 @@ namespace ThreadTimer
         {
             if (taskDic.TryRemove(taskId, out TickTask task))
             {
-                task.OnCancel?.Invoke(taskId);
+                if (setHandle && task.OnCancel != null)
+                {
+                    packQueue.Enqueue(new TickTaskPack(taskId, task.OnCancel));
+                }
+                else
+                {
+                    task.OnCancel?.Invoke(taskId);
+                }
                 return true;
             }
             else
@@ -114,6 +139,21 @@ namespace ThreadTimer
             }
         }
 
+        public void HandleTask()
+        {
+            while (packQueue != null && packQueue.Count > 0)
+            {
+                if (packQueue.TryDequeue(out TickTaskPack pack))
+                {
+                    pack.OnDo.Invoke(pack.TaskId);
+                }
+                else
+                {
+                    LogErrorAction?.Invoke("packQueue出队失败");
+                }
+            }
+        }
+
         private void FinishTask(int taskId)
         {
             // 线程安全字典，遍历过程中删除无影响
@@ -122,11 +162,22 @@ namespace ThreadTimer
                 CallDo(taskId, task.OnDo);
                 task.OnDo = null;
             }
+            else
+            {
+                LogWarningAction?.Invoke($"tid:{taskId} 移除失败.");
+            }
         }
 
         private void CallDo(int taskId, Action<int> onDo)
         {
-            onDo.Invoke(taskId);
+            if (setHandle)
+            {
+                packQueue.Enqueue(new TickTaskPack(taskId, onDo));
+            }
+            else
+            {
+                onDo.Invoke(taskId);
+            }
         }
 
         private double GetUtcMilliseconds()
@@ -137,7 +188,21 @@ namespace ThreadTimer
 
         protected override int GenerateTaskId()
         {
-            
+            lock (tidLock)
+            {
+                while (true)
+                {
+                    ++taskId;
+                    if (taskId == int.MaxValue)
+                    {
+                        taskId = 0;
+                    }
+                    if (!taskDic.ContainsKey(taskId))
+                    {
+                        return taskId;
+                    }
+                }
+            }
         }
 
         class TickTask
@@ -152,7 +217,7 @@ namespace ThreadTimer
             public double StartTime;
             public ulong CurrLoopIndex; // 代替在循环中加时间，防止累积偏差
 
-            public TickTask(int taskId, uint delayTime, int count, double destinationTime, 
+            public TickTask(int taskId, uint delayTime, int count, double destinationTime,
                 Action<int> onDo, Action<int> onCancel, double startTime)
             {
                 TaskId = taskId;
