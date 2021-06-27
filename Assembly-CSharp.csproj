@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{B20D3236-DA94-6C38-3F9A-40D48355C977}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -56,23 +57,26 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\FixedPhysx\Scripts\ColliderType.cs" />
+    <Compile Include="Assets\UIListener\WindowRoot.cs" />
     <Compile Include="Assets\KCPNet\Examples\Server\ServerSession.cs" />
     <Compile Include="Assets\KCPNet\Examples\Server\ServerStart.cs" />
+    <Compile Include="Assets\ThreadTimer\Examples\TestThreadTimer.cs" />
+    <Compile Include="Assets\UIListener\Examples\WindowTestUIListener.cs" />
     <Compile Include="Assets\KCPNet\Examples\Client\ClientStart.cs" />
+    <Compile Include="Assets\Joystick\Examples\TestJoystick.cs" />
+    <Compile Include="Assets\UIListener\Examples\TestUIListener.cs" />
     <Compile Include="Assets\FixedMath\Examples\TestFixedMath.cs" />
+    <Compile Include="Assets\FixedPhysx\Examples\TestFixedPhysx.cs" />
+    <Compile Include="Assets\CommonLog\TestCommonLog.cs" />
+    <Compile Include="Assets\Joystick\UIMobaJoystick.cs" />
     <Compile Include="Assets\KCPNet\Examples\UnityClient\NetSvc.cs" />
     <Compile Include="Assets\KCPNet\Examples\Client\ClientSession.cs" />
     <Compile Include="Assets\KCPNet\Examples\UnityClient\UnitySession.cs" />
     <Compile Include="Assets\KCPNet\Examples\TestKCPNet.cs" />
-    <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\CommonLog\TestCommonLog.cs" />
-    <Compile Include="Assets\UIListener\Examples\TestUIListener.cs" />
     <Compile Include="Assets\UIListener\UIListener.cs" />
-    <Compile Include="Assets\UIListener\WindowRoot.cs" />
-    <Compile Include="Assets\UIListener\Examples\WindowTestUIListener.cs" />
-    <Compile Include="Assets\Joystick\Examples\TestJoystick.cs" />
-    <Compile Include="Assets\Joystick\UIMobaJoystick.cs" />
-    <Compile Include="Assets\ThreadTimer\Examples\TestThreadTimer.cs" />
+    <Compile Include="Assets\Test.cs" />
+    <Compile Include="Assets\FixedPhysx\Scripts\ColliderConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ThreadTimer\netstandard2.0\ThreadTimer.dll" />
@@ -312,6 +316,9 @@
     <Reference Include="Kcp">
       <HintPath>Assets\KCPNet\ThirdDll\Kcp.dll</HintPath>
     </Reference>
+    <Reference Include="CommonLog">
+      <HintPath>Assets\CommonLog\netstandard2.0\CommonLog.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory">
       <HintPath>Assets\KCPNet\ThirdDll\System.Memory.dll</HintPath>
     </Reference>
@@ -327,6 +334,9 @@
     <Reference Include="System.Buffers">
       <HintPath>Assets\KCPNet\ThirdDll\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="ThreadTimer">
+      <HintPath>Assets\ThreadTimer\netstandard2.0\ThreadTimer.dll</HintPath>
+    </Reference>
     <Reference Include="FixedMath">
       <HintPath>Assets\FixedMath\netstandard2.0\FixedMath.dll</HintPath>
     </Reference>
@@ -335,12 +345,6 @@
     </Reference>
     <Reference Include="System.Numerics.Vectors">
       <HintPath>Assets\KCPNet\ThirdDll\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="CommonLog">
-      <HintPath>Assets\CommonLog\netstandard2.0\CommonLog.dll</HintPath>
-    </Reference>
-    <Reference Include="ThreadTimer">
-      <HintPath>Assets\ThreadTimer\netstandard2.0\ThreadTimer.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

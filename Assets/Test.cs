@@ -11,6 +11,7 @@ public class Test : MonoBehaviour
     public bool IsTestUIListener;
     public bool IsTestJoystick;
     public bool IsTestThreadTimer;
+    public bool IsTestFixedPhysx;
 
     private void Awake()
     {
@@ -19,5 +20,6 @@ public class Test : MonoBehaviour
         if (IsTestCommonLog) gameObject.AddComponent<TestCommonLog>();
         if (IsTestJoystick) gameObject.AddComponent<TestJoystick>();
         if (IsTestThreadTimer) gameObject.AddComponent<TestThreadTimer>();
+        if (IsTestFixedPhysx) gameObject.AddComponent<TestFixedPhysx>();
     }
 }
