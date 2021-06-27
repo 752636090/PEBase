@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerLogTest", "CommonLib\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadTimer", "CommonLib\ThreadTimer\ThreadTimer.csproj", "{07FC464B-B4C1-4BAF-A0EF-51C20E1E653E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadTimerExampleServer", "CommonLib\Examples\ThreadTimerExampleServer\ThreadTimerExampleServer.csproj", "{F563A4F1-607C-4C16-82F4-527295EE7167}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{07FC464B-B4C1-4BAF-A0EF-51C20E1E653E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07FC464B-B4C1-4BAF-A0EF-51C20E1E653E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07FC464B-B4C1-4BAF-A0EF-51C20E1E653E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F563A4F1-607C-4C16-82F4-527295EE7167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F563A4F1-607C-4C16-82F4-527295EE7167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F563A4F1-607C-4C16-82F4-527295EE7167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F563A4F1-607C-4C16-82F4-527295EE7167}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B96043B5-BA47-439A-AE2E-F0B648AC2C45} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
 		{EA674129-5F47-4BF4-8572-7C134D0A8BE2} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
+		{F563A4F1-607C-4C16-82F4-527295EE7167} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3183FE45-3AAB-4A97-AC1B-C1C482DBB788}
