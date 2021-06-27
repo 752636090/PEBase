@@ -29,7 +29,6 @@ namespace ThreadTimer
         private const string tidLock = "tidLock";
 
         private readonly Thread timerThread;
-
         public TickTimer(int interval = 0, bool setHandle = true)
         {
             taskDic = new ConcurrentDictionary<int, TickTask>();
@@ -76,7 +75,6 @@ namespace ThreadTimer
                 return -1;
             }
         }
-
         public override bool DeleteTask(int taskId)
         {
             if (taskDic.TryRemove(taskId, out TickTask task))
@@ -97,16 +95,18 @@ namespace ThreadTimer
                 return false;
             }
         }
-
         public override void Reset()
         {
+            if (!packQueue.IsEmpty)
+            {
+                LogWarningAction?.Invoke("packQueue不为空");
+            }
             taskDic.Clear();
             if (timerThread != null) // 在外面驱动就会为空
             {
                 timerThread.Abort();
             }
         }
-
         public void UpdateTask()
         {
             double nowTime = GetUtcMilliseconds();
@@ -138,7 +138,6 @@ namespace ThreadTimer
                 }
             }
         }
-
         public void HandleTask()
         {
             while (packQueue != null && packQueue.Count > 0)
@@ -167,7 +166,6 @@ namespace ThreadTimer
                 LogWarningAction?.Invoke($"tid:{taskId} 移除失败.");
             }
         }
-
         private void CallDo(int taskId, Action<int> onDo)
         {
             if (setHandle)
@@ -179,13 +177,11 @@ namespace ThreadTimer
                 onDo.Invoke(taskId);
             }
         }
-
         private double GetUtcMilliseconds()
         {
             TimeSpan timeSpan = DateTime.UtcNow - startDateTime;
             return timeSpan.TotalMilliseconds;
         }
-
         protected override int GenerateTaskId()
         {
             lock (tidLock)
