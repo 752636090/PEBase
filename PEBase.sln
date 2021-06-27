@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{B20D3236-DA94-6C38-3F9A-40D48355C977}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FixedMath", "CommonLib\FixedMath\FixedMath.csproj", "{E23DC288-A036-49C2-A3B1-5D75C8EB49E1}"
@@ -67,8 +65,5 @@ Global
 		{B96043B5-BA47-439A-AE2E-F0B648AC2C45} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
 		{EA674129-5F47-4BF4-8572-7C134D0A8BE2} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
 		{F563A4F1-607C-4C16-82F4-527295EE7167} = {6AFAF644-8093-4176-8B53-E68E8AB16B5A}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3183FE45-3AAB-4A97-AC1B-C1C482DBB788}
 	EndGlobalSection
 EndGlobal

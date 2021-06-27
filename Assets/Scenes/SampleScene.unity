@@ -156,7 +156,8 @@ MonoBehaviour:
   IsTestKCPNet: 0
   IsTestCommonLog: 0
   IsTestUIListener: 0
-  IsTestJoystick: 1
+  IsTestJoystick: 0
+  IsTestThreadTimer: 1
 --- !u!4 &289177696
 Transform:
   m_ObjectHideFlags: 0
