@@ -43,6 +43,8 @@ public class TestFixedPhysx : MonoBehaviour
         GetInput();
         FixedVector3 moveDir = inputDir;
         playerCollider.Position += moveDir * logicSpeed * (FixedFloat)multiplier;
+        FixedVector3 borderAdjust = FixedVector3.Zero;
+        playerCollider.DetectCollision(logicEnv.EnvColliderLst, ref moveDir, ref borderAdjust);
 
         logicPos = playerCollider.Position;
         player.position = logicPos.ConvertViewVector3();

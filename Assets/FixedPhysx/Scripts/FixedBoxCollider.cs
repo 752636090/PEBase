@@ -21,5 +21,15 @@ namespace FixedPhysx
             Rotation[2] = config.Rotation[2];
             Name = config.Name;
         }
+
+        protected override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
+        {
+
+        }
+
+        protected override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
+        {
+
+        }
     }
 }
