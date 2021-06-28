@@ -10,11 +10,11 @@ namespace FixedMath
 {
     public struct FixedVector3
     {
-        public FixedInt X;
-        public FixedInt Y;
-        public FixedInt Z;
+        public FixedFloat X;
+        public FixedFloat Y;
+        public FixedFloat Z;
 
-        public FixedVector3(FixedInt x, FixedInt y, FixedInt z)
+        public FixedVector3(FixedFloat x, FixedFloat y, FixedFloat z)
         {
             this.X = x;
             this.Y = y;
@@ -24,13 +24,13 @@ namespace FixedMath
 #if UNITY_ENV
         public FixedVector3(Vector3 v)
         {
-            X = (FixedInt)v.x;
-            Y = (FixedInt)v.y;
-            Z = (FixedInt)v.z;
+            X = (FixedFloat)v.x;
+            Y = (FixedFloat)v.y;
+            Z = (FixedFloat)v.z;
         }
 #endif
 
-        public FixedInt this[int index]
+        public FixedFloat this[int index]
         {
             get
             {
@@ -125,44 +125,44 @@ namespace FixedMath
         #region 运算符
         public static FixedVector3 operator +(FixedVector3 v1, FixedVector3 v2)
         {
-            FixedInt x = v1.X + v2.X;
-            FixedInt y = v1.Y + v2.Y;
-            FixedInt z = v1.Z + v2.Z;
+            FixedFloat x = v1.X + v2.X;
+            FixedFloat y = v1.Y + v2.Y;
+            FixedFloat z = v1.Z + v2.Z;
             return new FixedVector3(x, y, z);
         }
         public static FixedVector3 operator -(FixedVector3 v1, FixedVector3 v2)
         {
-            FixedInt x = v1.X - v2.X;
-            FixedInt y = v1.Y - v2.Y;
-            FixedInt z = v1.Z - v2.Z;
+            FixedFloat x = v1.X - v2.X;
+            FixedFloat y = v1.Y - v2.Y;
+            FixedFloat z = v1.Z - v2.Z;
             return new FixedVector3(x, y, z);
         }
-        public static FixedVector3 operator *(FixedVector3 v, FixedInt value)
+        public static FixedVector3 operator *(FixedVector3 v, FixedFloat value)
         {
-            FixedInt x = v.X * value;
-            FixedInt y = v.Y * value;
-            FixedInt z = v.Z * value;
+            FixedFloat x = v.X * value;
+            FixedFloat y = v.Y * value;
+            FixedFloat z = v.Z * value;
             return new FixedVector3(x, y, z);
         }
-        public static FixedVector3 operator *(FixedInt value, FixedVector3 v)
+        public static FixedVector3 operator *(FixedFloat value, FixedVector3 v)
         {
-            FixedInt x = v.X * value;
-            FixedInt y = v.Y * value;
-            FixedInt z = v.Z * value;
+            FixedFloat x = v.X * value;
+            FixedFloat y = v.Y * value;
+            FixedFloat z = v.Z * value;
             return new FixedVector3(x, y, z);
         }
-        public static FixedVector3 operator /(FixedVector3 v, FixedInt value)
+        public static FixedVector3 operator /(FixedVector3 v, FixedFloat value)
         {
-            FixedInt x = v.X / value;
-            FixedInt y = v.Y / value;
-            FixedInt z = v.Z / value;
+            FixedFloat x = v.X / value;
+            FixedFloat y = v.Y / value;
+            FixedFloat z = v.Z / value;
             return new FixedVector3(x, y, z);
         }
         public static FixedVector3 operator -(FixedVector3 v)
         {
-            FixedInt x = -v.X;
-            FixedInt y = -v.Y;
-            FixedInt z = -v.Z;
+            FixedFloat x = -v.X;
+            FixedFloat y = -v.Y;
+            FixedFloat z = -v.Z;
             return new FixedVector3(x, y, z);
         }
         public static bool operator ==(FixedVector3 v1, FixedVector3 v2)
@@ -178,7 +178,7 @@ namespace FixedMath
         /// <summary>
         /// 当前向量长度平方
         /// </summary>
-        public FixedInt SqrMagnitude
+        public FixedFloat SqrMagnitude
         {
             get
             {
@@ -186,12 +186,12 @@ namespace FixedMath
             }
         }
 
-        public static FixedInt SqrMagnitube(FixedVector3 v)
+        public static FixedFloat SqrMagnitube(FixedVector3 v)
         {
             return v.X * v.X + v.Y * v.Y + v.Z * v.Z;
         }
 
-        public FixedInt Magnitude
+        public FixedFloat Magnitude
         {
             get
             {
@@ -208,7 +208,7 @@ namespace FixedMath
             {
                 if (Magnitude > 0)
                 {
-                    FixedInt rate = FixedInt.One / Magnitude;
+                    FixedFloat rate = FixedFloat.One / Magnitude;
                     return new FixedVector3(X * rate, Y * rate, Z * rate);
                 }
                 else
@@ -233,7 +233,7 @@ namespace FixedMath
         {
             if (Magnitude > 0)
             {
-                FixedInt rate = FixedInt.One / Magnitude;
+                FixedFloat rate = FixedFloat.One / Magnitude;
                 X *= rate;
                 Y *= rate;
                 Z *= rate;
@@ -243,7 +243,7 @@ namespace FixedMath
         /// <summary>
         /// 点乘
         /// </summary>
-        public static FixedInt Dot(FixedVector3 a, FixedVector3 b)
+        public static FixedFloat Dot(FixedVector3 a, FixedVector3 b)
         {
             return a.X * b.X + a.Y * b.Y + a.Z * b.Z;
         }
@@ -261,13 +261,13 @@ namespace FixedMath
         /// </summary>
         public static FixedArgs Angle(FixedVector3 from, FixedVector3 to)
         {
-            FixedInt dot = Dot(from, to);
-            FixedInt mod = from.Magnitude * to.Magnitude;
+            FixedFloat dot = Dot(from, to);
+            FixedFloat mod = from.Magnitude * to.Magnitude;
             if (mod == 0)
             {
                 return FixedArgs.Zero;
             }
-            FixedInt value = dot / mod;
+            FixedFloat value = dot / mod;
             // 反余弦函数计算
             return FixedCalc.Acos(value);
         }

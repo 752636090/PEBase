@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FixedPhysx
 {
-    public enum ColliderType
+    public enum FixedColliderType
     {
         Box,
         Cylinder,

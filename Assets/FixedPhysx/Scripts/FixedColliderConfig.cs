@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace FixedPhysx
 {
-    public class ColliderConfig
+    public class FixedColliderConfig
     {
         public string Name { get; private set; }
-        public ColliderType Type { get; private set; }
+        public FixedColliderType Type { get; private set; }
         public FixedVector3 Position { get; private set; }
 
         /// <summary>
@@ -18,11 +18,11 @@ namespace FixedPhysx
         /// <summary>
         /// box÷·œÚ
         /// </summary>
-        public FixedVector3[] Axis { get; private set; }
+        public FixedVector3[] Rotation { get; private set; }
 
         /// <summary>
         /// cylinder∞Îæ∂
         /// </summary>
-        public FixedInt Radius { get; private set; }
+        public FixedFloat Radius { get; private set; }
     }
 }

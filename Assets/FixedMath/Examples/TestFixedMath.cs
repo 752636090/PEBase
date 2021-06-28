@@ -12,39 +12,39 @@ public class TestFixedMath : MonoBehaviour
 
     private static void Example1()
     {
-        FixedInt val1 = new FixedInt(1);
-        FixedInt val2 = new FixedInt(0.5f);
+        FixedFloat val1 = new FixedFloat(1);
+        FixedFloat val2 = new FixedFloat(0.5f);
 
         print(val1 > val2);
 
-        FixedInt val3 = val1 << 1;
+        FixedFloat val3 = val1 << 1;
         print(val3.ToString());
 
-        FixedInt val4 = 1;
-        FixedInt val5 = (FixedInt)0.5f;
+        FixedFloat val4 = 1;
+        FixedFloat val5 = (FixedFloat)0.5f;
     }
 
     private static void Example2()
     {
-        FixedInt val1 = new FixedInt(1);
-        FixedInt val2 = new FixedInt(1.5f);
+        FixedFloat val1 = new FixedFloat(1);
+        FixedFloat val2 = new FixedFloat(1.5f);
         print((val1 * val2).ToString());
 
-        FixedInt val3 = new FixedInt(2);
-        FixedInt val4 = new FixedInt(0.5f);
+        FixedFloat val3 = new FixedFloat(2);
+        FixedFloat val4 = new FixedFloat(0.5f);
         print((val3 / val4).ToString());
     }
 
     private static void Example3()
     {
         int hp = 500;
-        FixedInt val1 = hp * new FixedInt(0.3f);
+        FixedFloat val1 = hp * new FixedFloat(0.3f);
         print($"before scale:{val1.ScaleValue}");
         print($"before float:{val1.RawFloat}");
         print($"before int:{val1.RawInt}");
         print("----------------------------");
 
-        FixedInt val2 = hp * new FixedInt(-0.3f);
+        FixedFloat val2 = hp * new FixedFloat(-0.3f);
         print($"after scale:{val2.ScaleValue}");
         print($"after float:{val2.RawFloat}");
         print($"after int:{val2.RawInt}");
@@ -63,7 +63,7 @@ public class TestFixedMath : MonoBehaviour
         print(v.Magnitude);
         print("----------------------------");
 
-        FixedInt val = 3;
+        FixedFloat val = 3;
         print(FixedCalc.Sqrt(val));
     }
 
@@ -87,7 +87,7 @@ public class TestFixedMath : MonoBehaviour
         print($"angle info:{angle}");
 
         FixedVector3 v3 = new FixedVector3(1, 0, 0);
-        FixedVector3 v4 = new FixedVector3(1, (FixedInt)1.732f, 0);
+        FixedVector3 v4 = new FixedVector3(1, (FixedFloat)1.732f, 0);
         FixedArgs angle2 = FixedVector3.Angle(v3, v4);
         print($"angle view:{angle2.ConvertViewAngle()}");
         print($"angle float:{angle2.ConvertToFloat()}");

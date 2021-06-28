@@ -6,18 +6,18 @@ namespace FixedMath
 {
     public class FixedCalc
     {
-        public static FixedInt Sqrt(FixedInt value, int iteratorCount = 8)
+        public static FixedFloat Sqrt(FixedFloat value, int iteratorCount = 8)
         {
-            if (value == FixedInt.Zero)
+            if (value == FixedFloat.Zero)
             {
                 return 0;
             }
-            if (value < FixedInt.Zero)
+            if (value < FixedFloat.Zero)
             {
                 throw new Exception("被平方数小于0");
             }
-            FixedInt result = value;
-            FixedInt history;
+            FixedFloat result = value;
+            FixedFloat history;
             int count = 0;
             do
             {
@@ -28,15 +28,15 @@ namespace FixedMath
             return result;
         }
 
-        public static FixedArgs Acos(FixedInt value)
+        public static FixedArgs Acos(FixedFloat value)
         {
-            FixedInt rate = (value * AcosTable.HalfIndexCount) + AcosTable.HalfIndexCount;
-            rate = Clamp(rate, FixedInt.Zero, AcosTable.IndexCount);
+            FixedFloat rate = (value * AcosTable.HalfIndexCount) + AcosTable.HalfIndexCount;
+            rate = Clamp(rate, FixedFloat.Zero, AcosTable.IndexCount);
             int rad = AcosTable.Table[rate.RawInt];
             return new FixedArgs(rad, AcosTable.Multiplier);
         }
 
-        public static FixedInt Clamp(FixedInt input, FixedInt min, FixedInt max)
+        public static FixedFloat Clamp(FixedFloat input, FixedFloat min, FixedFloat max)
         {
             if (input < min)
             {

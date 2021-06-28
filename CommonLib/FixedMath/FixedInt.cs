@@ -2,7 +2,7 @@
 
 namespace FixedMath
 {
-    public struct FixedInt
+    public struct FixedFloat
     {
         private static class Const
         {
@@ -13,8 +13,8 @@ namespace FixedMath
             public const long MultiplierFactor = 1 << BitMoveCount;
         }
 
-        public static readonly FixedInt Zero = new FixedInt(0);
-        public static readonly FixedInt One = new FixedInt(1);
+        public static readonly FixedFloat Zero = new FixedFloat(0);
+        public static readonly FixedFloat One = new FixedFloat(1);
 
         private long scaledValue;
         public long ScaleValue
@@ -34,17 +34,17 @@ namespace FixedMath
         /// 内部使用，已经缩放完成的数据
         /// </summary>
         /// <param name="scaledValue"></param>
-        private FixedInt(long scaledValue)
+        private FixedFloat(long scaledValue)
         {
             this.scaledValue = scaledValue;
         }
 
-        public FixedInt(int val)
+        public FixedFloat(int val)
         {
             scaledValue = val * Const.MultiplierFactor;
         }
 
-        public FixedInt(float val)
+        public FixedFloat(float val)
         {
             scaledValue = (long)Math.Round(val * Const.MultiplierFactor);
         }
@@ -53,34 +53,34 @@ namespace FixedMath
         /// float损失精度，必须显示转换
         /// </summary>
         /// <param name="f"></param>
-        public static explicit operator FixedInt(float f)
+        public static explicit operator FixedFloat(float f)
         {
-            return new FixedInt((long)Math.Round(f * Const.MultiplierFactor));
+            return new FixedFloat((long)Math.Round(f * Const.MultiplierFactor));
         }
 
         /// <summary>
         /// int不损失精度，可以隐式转换
         /// </summary>
         /// <param name="i"></param>
-        public static implicit operator FixedInt(int i)
+        public static implicit operator FixedFloat(int i)
         {
-            return new FixedInt(i);
+            return new FixedFloat(i);
         }
         #endregion
 
         #region 运算符
         #region 加减乘除、取反
-        public static FixedInt operator +(FixedInt a, FixedInt b)
+        public static FixedFloat operator +(FixedFloat a, FixedFloat b)
         {
-            return new FixedInt(a.scaledValue + b.scaledValue);
+            return new FixedFloat(a.scaledValue + b.scaledValue);
         }
 
-        public static FixedInt operator -(FixedInt a, FixedInt b)
+        public static FixedFloat operator -(FixedFloat a, FixedFloat b)
         {
-            return new FixedInt(a.scaledValue - b.scaledValue);
+            return new FixedFloat(a.scaledValue - b.scaledValue);
         }
 
-        public static FixedInt operator *(FixedInt a, FixedInt b)
+        public static FixedFloat operator *(FixedFloat a, FixedFloat b)
         {
             long value = a.scaledValue * b.scaledValue;
             if (value >= 0)
@@ -91,70 +91,70 @@ namespace FixedMath
             {
                 value = -(-value >> Const.BitMoveCount);
             }
-            return new FixedInt(value);
+            return new FixedFloat(value);
         }
 
-        public static FixedInt operator /(FixedInt a, FixedInt b)
+        public static FixedFloat operator /(FixedFloat a, FixedFloat b)
         {
             if (b.scaledValue == 0)
             {
                 throw new Exception("除数等于0");
             }
-            return new FixedInt((a.scaledValue << Const.BitMoveCount) / b.scaledValue);
+            return new FixedFloat((a.scaledValue << Const.BitMoveCount) / b.scaledValue);
         }
 
-        public static FixedInt operator -(FixedInt value)
+        public static FixedFloat operator -(FixedFloat value)
         {
-            return new FixedInt(-value.scaledValue);
+            return new FixedFloat(-value.scaledValue);
         }
         #endregion
 
         #region 比较、移位
-        public static bool operator ==(FixedInt a, FixedInt b)
+        public static bool operator ==(FixedFloat a, FixedFloat b)
         {
             return a.scaledValue == b.scaledValue;
         }
 
-        public static bool operator !=(FixedInt a, FixedInt b)
+        public static bool operator !=(FixedFloat a, FixedFloat b)
         {
             return a.scaledValue != b.scaledValue;
         }
 
-        public static bool operator >(FixedInt a, FixedInt b)
+        public static bool operator >(FixedFloat a, FixedFloat b)
         {
             return a.scaledValue > b.scaledValue;
         }
 
-        public static bool operator <(FixedInt a, FixedInt b)
+        public static bool operator <(FixedFloat a, FixedFloat b)
         {
             return a.scaledValue < b.scaledValue;
         }
 
-        public static bool operator >=(FixedInt a, FixedInt b)
+        public static bool operator >=(FixedFloat a, FixedFloat b)
         {
             return a.scaledValue >= b.scaledValue;
         }
 
-        public static bool operator <=(FixedInt a, FixedInt b)
+        public static bool operator <=(FixedFloat a, FixedFloat b)
         {
             return a.scaledValue <= b.scaledValue;
         }
 
-        public static FixedInt operator >>(FixedInt value, int moveCount)
+        public static FixedFloat operator >>(FixedFloat value, int moveCount)
         {
             if (value.scaledValue >= 0)
             {
-                return new FixedInt(value.scaledValue >> moveCount);
+                return new FixedFloat(value.scaledValue >> moveCount);
             }
             else
             {
-                return new FixedInt(-(-value.scaledValue >> moveCount));
+                return new FixedFloat(-(-value.scaledValue >> moveCount));
             }
         }
 
-        public static FixedInt operator <<(FixedInt value, int moveCount)
+        public static FixedFloat operator <<(FixedFloat value, int moveCount)
         {
-            return new FixedInt(value.scaledValue << moveCount);
+            return new FixedFloat(value.scaledValue << moveCount);
         } 
         #endregion
         #endregion
@@ -191,7 +191,7 @@ namespace FixedMath
             {
                 return false;
             }
-            FixedInt vInt = (FixedInt)obj;
+            FixedFloat vInt = (FixedFloat)obj;
             return scaledValue == vInt.scaledValue;
         }
 
