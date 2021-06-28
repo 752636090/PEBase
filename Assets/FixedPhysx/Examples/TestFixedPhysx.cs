@@ -10,6 +10,8 @@ public class TestFixedPhysx : MonoBehaviour
 {
     [SerializeField]
     private Transform player;
+    [SerializeField]
+    private Transform transEnvRoot;
     private FixedVector3 logicPos;
     private FixedVector3 logicDir;
     [SerializeField]
@@ -18,11 +20,13 @@ public class TestFixedPhysx : MonoBehaviour
     private float multiplier = 0.1f;
     private FixedVector3 inputDir;
     private FixedCylinderCollider playerCollider;
+    private FixedEnvColliders logicEnv;
 
     private void Start()
     {
         GameObject testRoot = Instantiate(Resources.Load("TestFixedPhysx")) as GameObject;
         testRoot.name = "TestFixedPhysx";
+        transEnvRoot = testRoot.transform.GetChild(0);
 
         CommonLog.InitSettings(new LogConfig { LogType = Utils.LogType.Unity });
         this.Log("初始化日志工具完毕.");
@@ -30,6 +34,7 @@ public class TestFixedPhysx : MonoBehaviour
         Time.fixedDeltaTime = 0.0667f;
 
         player = testRoot.transform.Find("Player").transform;
+        InitEnv();
         InitPlayer();
     }
 
@@ -62,5 +67,54 @@ public class TestFixedPhysx : MonoBehaviour
         playerCollider = new FixedCylinderCollider(config);
         logicPos = config.Position;
         logicDir = FixedVector3.Zero;
+    }
+
+    private void InitEnv()
+    {
+        List<FixedColliderConfig> envColliderConfigLst = GenerateEnvColliderConfigs();
+        logicEnv = new FixedEnvColliders(envColliderConfigLst);
+        logicEnv.Init();
+    }
+
+    private List<FixedColliderConfig> GenerateEnvColliderConfigs()
+    {
+        List<FixedColliderConfig> envColliderConfigLst = new List<FixedColliderConfig>();
+        BoxCollider[] boxArr = transEnvRoot.GetComponentsInChildren<BoxCollider>();
+        for (int i = 0; i < boxArr.Length; i++)
+        {
+            Transform trans = boxArr[i].transform;
+            if (trans.gameObject.activeSelf == false)
+            {
+                continue;
+            }
+            FixedColliderConfig config = new FixedColliderConfig
+            {
+                Position = new FixedVector3(trans.position)
+            };
+
+            config.Name = trans.gameObject.name;
+            config.Size = new FixedVector3(trans.localScale / 2);
+            config.Type = FixedColliderType.Box;
+            config.Rotation = new FixedVector3[3];
+            config.Rotation[0] = new FixedVector3(trans.right);
+            config.Rotation[1] = new FixedVector3(trans.up);
+            config.Rotation[2] = new FixedVector3(trans.forward);
+            envColliderConfigLst.Add(config);
+        }
+
+        CapsuleCollider[] cylinderArr = transEnvRoot.GetComponentsInChildren<CapsuleCollider>();
+        for (int i = 0; i < cylinderArr.Length; i++)
+        {
+            Transform trans = cylinderArr[i].transform;
+            FixedColliderConfig config = new FixedColliderConfig
+            {
+                Position = new FixedVector3(trans.position)
+            };
+            config.Name = trans.gameObject.name;
+            config.Type = FixedColliderType.Cylinder;
+            config.Radius = (FixedFloat)trans.localScale.x / 2;
+            envColliderConfigLst.Add(config);
+        }
+        return envColliderConfigLst;
     }
 }
