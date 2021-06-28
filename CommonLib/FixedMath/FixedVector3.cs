@@ -277,7 +277,7 @@ namespace FixedMath
         /// 获取浮点数向量（注意：不可再进行逻辑运算）
         /// </summary>
         /// <returns></returns>
-        public Vector3 ConvertViewVector()
+        public Vector3 ConvertViewVector3()
         {
             return new Vector3(X.RawFloat, Y.RawFloat, Z.RawFloat);
         }
