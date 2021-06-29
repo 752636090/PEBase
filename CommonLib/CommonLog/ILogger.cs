@@ -7,7 +7,7 @@ namespace Utils
     interface ILogger
     {
         void Log(string msg, ConsoleColor color = ConsoleColor.Gray);
-        void Waring(string msg);
-        void Error(string msg);
+        void LogWaring(string msg);
+        void LogError(string msg);
     }
 }

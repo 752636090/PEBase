@@ -28,12 +28,12 @@ namespace Utils
             logMethod.Invoke(null, new object[] { msg });
         }
 
-        public void Waring(string msg)
+        public void LogWaring(string msg)
         {
             warningMethod.Invoke(null, new object[] { msg });
         }
 
-        public void Error(string msg)
+        public void LogError(string msg)
         {
             errorMethod.Invoke(null, new object[] { msg });
         }

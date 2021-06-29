@@ -23,8 +23,8 @@ namespace ThreadTimerExampleServer
             TickTimer timer = new(10, false)
             {
                 LogAction = CommonLog.Log,
-                LogWarningAction = CommonLog.Warning,
-                LogErrorAction = CommonLog.Error
+                LogWarningAction = CommonLog.LogWarning,
+                LogErrorAction = CommonLog.LogError
             };
 
             uint interval = 66;
@@ -74,8 +74,8 @@ namespace ThreadTimerExampleServer
             TickTimer timer = new(10, true)
             {
                 LogAction = CommonLog.Log,
-                LogWarningAction = CommonLog.Warning,
-                LogErrorAction = CommonLog.Error
+                LogWarningAction = CommonLog.LogWarning,
+                LogErrorAction = CommonLog.LogError
             };
 
             uint interval = 66;
@@ -135,8 +135,8 @@ namespace ThreadTimerExampleServer
             TickTimer timer = new(0, false)
             {
                 LogAction = CommonLog.Log,
-                LogWarningAction = CommonLog.Warning,
-                LogErrorAction = CommonLog.Error
+                LogWarningAction = CommonLog.LogWarning,
+                LogErrorAction = CommonLog.LogError
             };
 
             uint interval = 66;
@@ -196,8 +196,8 @@ namespace ThreadTimerExampleServer
             TickTimer timer = new(0, false)
             {
                 LogAction = CommonLog.Log,
-                LogWarningAction = CommonLog.Warning,
-                LogErrorAction = CommonLog.Error
+                LogWarningAction = CommonLog.LogWarning,
+                LogErrorAction = CommonLog.LogError
             };
 
             uint interval = 66;

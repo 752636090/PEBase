@@ -6,7 +6,7 @@ namespace Utils
 {
     class ConsoleLogger : ILogger
     {
-        public void Error(string msg)
+        public void LogError(string msg)
         {
             WriteConsoleLog(msg, ConsoleColor.DarkRed);
         }
@@ -16,7 +16,7 @@ namespace Utils
             WriteConsoleLog(msg, color);
         }
 
-        public void Waring(string msg)
+        public void LogWaring(string msg)
         {
             WriteConsoleLog(msg, ConsoleColor.DarkYellow);
         }

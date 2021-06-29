@@ -20,7 +20,7 @@ namespace ServerLogTest
     {
         public void Init()
         {
-            this.Warning("Init Mgr Waring.");
+            this.LogWarning("Init Mgr Waring.");
             Item item = new Item();
             item.Init();
         }
@@ -30,8 +30,8 @@ namespace ServerLogTest
     {
         public void Init()
         {
-            this.Error("Init Item Error");
-            this.Trace("Trace This Func");
+            this.LogError("Init Item Error");
+            this.LogTrace("Trace This Func");
         }
     }
 }

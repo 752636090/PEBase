@@ -22,29 +22,29 @@ public static class ExtentionMethods
     {
         Utils.CommonLog.ColorLog(color, log);
     }
-    public static void Trace(this object obj, string log, params object[] args)
+    public static void LogTrace(this object obj, string log, params object[] args)
     {
-        Utils.CommonLog.Trace(string.Format(log, args));
+        Utils.CommonLog.LogTrace(string.Format(log, args));
     }
-    public static void Trace(this object obj, object log)
+    public static void LogTrace(this object obj, object log)
     {
-        Utils.CommonLog.Trace(log);
+        Utils.CommonLog.LogTrace(log);
     }
-    public static void Warning(this object obj, string log, params object[] args)
+    public static void LogWarning(this object obj, string log, params object[] args)
     {
-        Utils.CommonLog.Warning(string.Format(log, args));
+        Utils.CommonLog.LogWarning(string.Format(log, args));
     }
-    public static void Warning(this object obj, object log)
+    public static void LogWarning(this object obj, object log)
     {
-        Utils.CommonLog.Warning(log);
+        Utils.CommonLog.LogWarning(log);
     }
-    public static void Error(this object obj, string log, params object[] args)
+    public static void LogError(this object obj, string log, params object[] args)
     {
-        Utils.CommonLog.Error(string.Format(log, args));
+        Utils.CommonLog.LogError(string.Format(log, args));
     }
-    public static void Error(this object obj, object log)
+    public static void LogError(this object obj, object log)
     {
-        Utils.CommonLog.Error(log);
+        Utils.CommonLog.LogError(log);
     }
 }
 
@@ -180,7 +180,7 @@ namespace Utils
                 WriteToFile($"[L]{msg}");
             }
         }
-        public static void Trace(string msg, params object[] args)
+        public static void LogTrace(string msg, params object[] args)
         {
             if (!LogConfig.EnableLog)
             {
@@ -193,7 +193,7 @@ namespace Utils
                 WriteToFile($"[T]{msg}");
             }
         }
-        public static void Trace(object obj)
+        public static void LogTrace(object obj)
         {
             if (!LogConfig.EnableLog)
             {
@@ -206,53 +206,53 @@ namespace Utils
                 WriteToFile($"[T]{msg}");
             }
         }
-        public static void Warning(string msg, params object[] args)
+        public static void LogWarning(string msg, params object[] args)
         {
             if (!LogConfig.EnableLog)
             {
                 return;
             }
             msg = DecorateLog(string.Format(msg, args));
-            logger.Waring(msg);
+            logger.LogWaring(msg);
             if (LogConfig.EnableSave)
             {
                 WriteToFile($"[W]{msg}");
             }
         }
-        public static void Warning(object obj)
+        public static void LogWarning(object obj)
         {
             if (!LogConfig.EnableLog)
             {
                 return;
             }
             string msg = DecorateLog(obj.ToString());
-            logger.Waring(msg);
+            logger.LogWaring(msg);
             if (LogConfig.EnableSave)
             {
                 WriteToFile($"[W]{msg}");
             }
         }
-        public static void Error(string msg, params object[] args)
+        public static void LogError(string msg, params object[] args)
         {
             if (!LogConfig.EnableLog)
             {
                 return;
             }
             msg = DecorateLog(string.Format(msg, args), true);
-            logger.Error(msg);
+            logger.LogError(msg);
             if (LogConfig.EnableSave)
             {
                 WriteToFile($"[E]{msg}");
             }
         }
-        public static void Error(object obj)
+        public static void LogError(object obj)
         {
             if (!LogConfig.EnableLog)
             {
                 return;
             }
             string msg = DecorateLog(obj.ToString(), true);
-            logger.Error(msg);
+            logger.LogError(msg);
             if (LogConfig.EnableSave)
             {
                 WriteToFile($"[E]{msg}");

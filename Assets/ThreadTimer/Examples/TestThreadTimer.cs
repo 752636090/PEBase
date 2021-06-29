@@ -36,8 +36,8 @@ public class TestThreadTimer : MonoBehaviour
         TickTimer timer = new TickTimer(10, true)
         {
             LogAction = CommonLog.Log,
-            LogWarningAction = CommonLog.Warning,
-            LogErrorAction = CommonLog.Error
+            LogWarningAction = CommonLog.LogWarning,
+            LogErrorAction = CommonLog.LogError
         };
 
         onUpdate = () =>

@@ -25,11 +25,13 @@ namespace FixedPhysx
 
         protected override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
+            this.LogError("TODO"); // 分离轴算法
             return false;
         }
 
         protected override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
+            this.LogError("TODO");
             return false;
         }
     }
