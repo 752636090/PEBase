@@ -50,7 +50,7 @@ namespace FixedPhysx
                 FixedCollisionInfo info = collisionInfoLst[0];
                 velocity = CorrectVelocity(velocity, info.Normal);
                 borderAdjust = info.BorderAdjust;
-                this.Log($"单个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
+                //this.Log($"单个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
             }
             else if (collisionInfoLst.Count > 1)
             {
@@ -61,7 +61,7 @@ namespace FixedPhysx
                 if (angle > borderNormalAngle)
                 {
                     velocity = CorrectVelocity(velocity, info.Normal);
-                    this.Log($"多个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
+                    //this.Log($"多个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
                     FixedVector3 adjustSum = FixedVector3.Zero;
                     for (int i = 0; i < collisionInfoLst.Count; i++)
                     {
@@ -72,7 +72,7 @@ namespace FixedPhysx
                 else
                 {
                     velocity = FixedVector3.Zero;
-                    this.Log($"速度方向反向量在校正法线夹角内，无法移动：{angle.ConvertViewAngle()}");
+                    //this.Log($"速度方向反向量在校正法线夹角内，无法移动：{angle.ConvertViewAngle()}");
                 }
             }
             else
@@ -132,7 +132,7 @@ namespace FixedPhysx
             return velocity;
         }
 
-        protected override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
+        public override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
             FixedVector3 disOffset = Position - collider.Position;
             // 计算向量在长方体轴向上的投影长度
@@ -168,7 +168,7 @@ namespace FixedPhysx
             }
         }
 
-        protected override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
+        public override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
             FixedVector3 disOffset = Position - collider.Position;
             if (FixedVector3.SqrMagnitube(disOffset) > (Radius + collider.Radius) * (Radius + collider.Radius))

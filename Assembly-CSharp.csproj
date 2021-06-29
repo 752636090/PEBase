@@ -74,13 +74,6 @@
     <Compile Include="Assets\KCPNet\Examples\TestKCPNet.cs" />
     <Compile Include="Assets\UIListener\UIListener.cs" />
     <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedColliderConfig.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedColliderType.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedColliderBase.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedBoxCollider.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedCylinderCollider.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedEnvColliders.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\FixedCollisionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ThreadTimer\netstandard2.0\ThreadTimer.dll" />
@@ -88,6 +81,7 @@
     <None Include="Assets\CommonLog\netstandard2.0\CommonLog.dll" />
     <None Include="Assets\KCPNet\ThirdDll\System.Runtime.CompilerServices.Unsafe.dll" />
     <None Include="Assets\KCPNet\ThirdDll\System.Buffers.dll" />
+    <None Include="Assets\FixedPhysx\netstandard2.0\FixedPhysx.dll" />
     <None Include="Assets\FixedMath\netstandard2.0\FixedMath.dll" />
     <None Include="Assets\KCPNet\ThirdDll\System.Memory.dll" />
     <None Include="Assets\KCPNet\ThirdDll\Kcp.dll" />
@@ -349,6 +343,9 @@
     </Reference>
     <Reference Include="System.Numerics.Vectors">
       <HintPath>Assets\KCPNet\ThirdDll\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="FixedPhysx">
+      <HintPath>Assets\FixedPhysx\netstandard2.0\FixedPhysx.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Program Files\Unity\Hub\Editor\2020.3.10f1c1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

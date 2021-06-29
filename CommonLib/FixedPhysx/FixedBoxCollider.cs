@@ -23,16 +23,21 @@ namespace FixedPhysx
             Name = config.Name;
         }
 
-        protected override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
+        public override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
-            this.LogError("TODO"); // 分离轴算法
+            // 分离轴算法
+            this.LogError("TODO");
             return false;
         }
 
-        protected override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
+        public override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
-            this.LogError("TODO");
-            return false;
+            FixedVector3 tmpNormal = FixedVector3.Zero;
+            FixedVector3 tmpAdjust = FixedVector3.Zero;
+            bool result = collider.DetectBoxCollision(this, ref tmpNormal, ref tmpAdjust);
+            normal = -tmpNormal;
+            borderAdjust = -tmpAdjust;
+            return result;
         }
     }
 }

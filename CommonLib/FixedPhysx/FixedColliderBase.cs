@@ -25,12 +25,12 @@ namespace FixedPhysx
             }
             else
             {
-                UnityEngine.Debug.Log("TODO"); // TODO
+                this.LogError("TODO"); // TODO
                 return false;
             }
         }
-        protected abstract bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust);
-        protected abstract bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust);
+        public abstract bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust);
+        public abstract bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust);
         //public abstract void DetectCollision(List<FixedColliderBase> colliders, ref FixedVector3 velocity, ref FixedVector3 borderAdjust);
     }
 }
