@@ -62,9 +62,16 @@ namespace FixedPhysx
                 {
                     velocity = CorrectVelocity(velocity, info.Normal);
                     this.Log($"多个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
+                    FixedVector3 adjustSum = FixedVector3.Zero;
+                    for (int i = 0; i < collisionInfoLst.Count; i++)
+                    {
+                        adjustSum += collisionInfoLst[i].BorderAdjust;
+                    }
+                    borderAdjust = adjustSum; 
                 }
                 else
                 {
+                    velocity = FixedVector3.Zero;
                     this.Log($"速度方向反向量在校正法线夹角内，无法移动：{angle.ConvertViewAngle()}");
                 }
             }
