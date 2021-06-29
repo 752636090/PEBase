@@ -16,6 +16,7 @@ namespace FixedPhysx
         {
             Position = config.Position;
             Size = config.Size;
+            Rotation = new FixedVector3[3];
             Rotation[0] = config.Rotation[0];
             Rotation[1] = config.Rotation[1];
             Rotation[2] = config.Rotation[2];
@@ -24,12 +25,12 @@ namespace FixedPhysx
 
         protected override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
-
+            return false;
         }
 
         protected override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
-
+            return false;
         }
     }
 }

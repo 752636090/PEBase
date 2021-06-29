@@ -50,7 +50,7 @@ namespace FixedPhysx
 
             // 计算轴向上的投影向量
             FixedVector3 projectionX = clampX * collider.Rotation[0];
-            FixedVector3 projectionZ = clampX * collider.Rotation[2];
+            FixedVector3 projectionZ = clampZ * collider.Rotation[2];
 
             // 计算表面最近的接触点：碰撞体中心位置+轴向偏移
             FixedVector3 point = collider.Position;
@@ -74,7 +74,17 @@ namespace FixedPhysx
 
         protected override bool DetectSphereCollision(FixedCylinderCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)
         {
-
+            FixedVector3 disOffset = Position - collider.Position;
+            if (FixedVector3.SqrMagnitube(disOffset) > (Radius + collider.Radius) * (Radius + collider.Radius))
+            {
+                return false;
+            }
+            else
+            {
+                normal = disOffset.Normalized;
+                borderAdjust = normal * (Radius + collider.Radius - disOffset.Magnitude);
+                return true;
+            }
         }
     }
 }
