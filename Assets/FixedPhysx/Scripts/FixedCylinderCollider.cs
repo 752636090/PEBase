@@ -55,13 +55,13 @@ namespace FixedPhysx
             else if (collisionInfoLst.Count > 1)
             {
                 FixedVector3 centerNormal = FixedVector3.Zero;
-
-                FixedArgs borderNormalAngle = CalcMaxNormalAngle(collisionInfoLst, ref centerNormal);
+                FixedCollisionInfo info = null;
+                FixedArgs borderNormalAngle = CalcMaxNormalAngle(collisionInfoLst, velocity, ref centerNormal, ref info);
                 FixedArgs angle = FixedVector3.Angle(-velocity, centerNormal);
                 if (angle > borderNormalAngle)
                 {
-                    //velocity = CorrectVelocity(velocity, )
-                    //this.Log($"多个碰撞体，校正速度：{}");
+                    velocity = CorrectVelocity(velocity, info.Normal);
+                    this.Log($"多个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
                 }
                 else
                 {
@@ -70,11 +70,12 @@ namespace FixedPhysx
             }
             else
             {
-                this.Log("没有碰撞");
+                //this.Log("没有碰撞");
             }
         }
 
-        private FixedArgs CalcMaxNormalAngle(List<FixedCollisionInfo> infoLst, ref FixedVector3 centerNormal)
+        private FixedArgs CalcMaxNormalAngle(List<FixedCollisionInfo> infoLst, FixedVector3 velocity, ref FixedVector3 centerNormal,
+            ref FixedCollisionInfo info)
         {
             for (int i = 0; i < infoLst.Count; i++)
             {
@@ -83,6 +84,7 @@ namespace FixedPhysx
             centerNormal /= infoLst.Count;
 
             FixedArgs normalAngle = FixedArgs.Zero;
+            FixedArgs velocityAngle = FixedArgs.Zero;
 
             for (int i = 0; i < infoLst.Count; i++)
             {
@@ -90,6 +92,14 @@ namespace FixedPhysx
                 if (normalAngle < tmpNormalAngle)
                 {
                     normalAngle = tmpNormalAngle;
+                }
+
+                // 找出速度方向与法线方向夹角最大的碰撞法线，速度校正由这个法线来决定
+                FixedArgs tmpVelocityAngle = FixedVector3.Angle(velocity, infoLst[i].Normal);
+                if (velocityAngle < tmpVelocityAngle)
+                {
+                    velocityAngle = tmpVelocityAngle;
+                    info = infoLst[i];
                 }
             }
 
