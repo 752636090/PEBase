@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FixedPhysx
 {
-    public class CollisionInfo
+    public class FixedCollisionInfo
     {
         public FixedColliderBase Collider;
         public FixedVector3 Normal;

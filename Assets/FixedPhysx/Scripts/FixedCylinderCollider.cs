@@ -28,14 +28,14 @@ namespace FixedPhysx
                 return;
             }
 
-            List<CollisionInfo> collisionInfoLst = new List<CollisionInfo>();
+            List<FixedCollisionInfo> collisionInfoLst = new List<FixedCollisionInfo>();
             FixedVector3 normal = FixedVector3.Zero;
             FixedVector3 adjust = FixedVector3.Zero;
             for (int i = 0; i < colliders.Count; i++)
             {
                 if (DetectCollision(colliders[i], ref normal, ref adjust))
                 {
-                    CollisionInfo info = new CollisionInfo
+                    FixedCollisionInfo info = new FixedCollisionInfo
                     {
                         Collider = colliders[i],
                         Normal = normal,
@@ -47,11 +47,53 @@ namespace FixedPhysx
 
             if (collisionInfoLst.Count == 1) // 单个碰撞体，修正速度方向以及校正位置
             {
-                CollisionInfo info = collisionInfoLst[0];
+                FixedCollisionInfo info = collisionInfoLst[0];
                 velocity = CorrectVelocity(velocity, info.Normal);
                 borderAdjust = info.BorderAdjust;
                 this.Log($"单个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
             }
+            else if (collisionInfoLst.Count > 1)
+            {
+                FixedVector3 centerNormal = FixedVector3.Zero;
+
+                FixedArgs borderNormalAngle = CalcMaxNormalAngle(collisionInfoLst, ref centerNormal);
+                FixedArgs angle = FixedVector3.Angle(-velocity, centerNormal);
+                if (angle > borderNormalAngle)
+                {
+                    //velocity = CorrectVelocity(velocity, )
+                    //this.Log($"多个碰撞体，校正速度：{}");
+                }
+                else
+                {
+                    this.Log($"速度方向反向量在校正法线夹角内，无法移动：{angle.ConvertViewAngle()}");
+                }
+            }
+            else
+            {
+                this.Log("没有碰撞");
+            }
+        }
+
+        private FixedArgs CalcMaxNormalAngle(List<FixedCollisionInfo> infoLst, ref FixedVector3 centerNormal)
+        {
+            for (int i = 0; i < infoLst.Count; i++)
+            {
+                centerNormal += infoLst[i].Normal;
+            }
+            centerNormal /= infoLst.Count;
+
+            FixedArgs normalAngle = FixedArgs.Zero;
+
+            for (int i = 0; i < infoLst.Count; i++)
+            {
+                FixedArgs tmpNormalAngle = FixedVector3.Angle(centerNormal, infoLst[i].Normal);
+                if (normalAngle < tmpNormalAngle)
+                {
+                    normalAngle = tmpNormalAngle;
+                }
+            }
+
+            return normalAngle;
         }
 
         private FixedVector3 CorrectVelocity(FixedVector3 velocity, FixedVector3 normal)

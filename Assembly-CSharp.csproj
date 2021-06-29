@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{B20D3236-DA94-6C38-3F9A-40D48355C977}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -80,7 +81,7 @@
     <Compile Include="Assets\FixedPhysx\Scripts\FixedBoxCollider.cs" />
     <Compile Include="Assets\FixedPhysx\Scripts\FixedCylinderCollider.cs" />
     <Compile Include="Assets\FixedPhysx\Scripts\FixedEnvColliders.cs" />
-    <Compile Include="Assets\FixedPhysx\Scripts\CollisionInfo.cs" />
+    <Compile Include="Assets\FixedPhysx\Scripts\FixedCollisionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ThreadTimer\netstandard2.0\ThreadTimer.dll" />
