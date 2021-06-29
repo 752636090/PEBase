@@ -28,12 +28,49 @@ namespace FixedPhysx
                 return;
             }
 
+            List<CollisionInfo> collisionInfoLst = new List<CollisionInfo>();
             FixedVector3 normal = FixedVector3.Zero;
             FixedVector3 adjust = FixedVector3.Zero;
-            if (DetectCollision(colliders[0], ref normal, ref adjust))
+            for (int i = 0; i < colliders.Count; i++)
             {
-                this.Log("碰撞.");
+                if (DetectCollision(colliders[i], ref normal, ref adjust))
+                {
+                    CollisionInfo info = new CollisionInfo
+                    {
+                        Collider = colliders[i],
+                        Normal = normal,
+                        BorderAdjust = adjust
+                    };
+                    collisionInfoLst.Add(info);
+                } 
             }
+
+            if (collisionInfoLst.Count == 1) // 单个碰撞体，修正速度方向以及校正位置
+            {
+                CollisionInfo info = collisionInfoLst[0];
+                velocity = CorrectVelocity(velocity, info.Normal);
+                borderAdjust = info.BorderAdjust;
+                this.Log($"单个碰撞体，校正速度：{velocity.ConvertViewVector3()}");
+            }
+        }
+
+        private FixedVector3 CorrectVelocity(FixedVector3 velocity, FixedVector3 normal)
+        {
+            if (normal == FixedVector3.Zero)
+            {
+                return velocity;
+            }
+
+            // 确保是靠近，不是远离
+            if (FixedVector3.Angle(normal, velocity) > FixedArgs.HalfPi)
+            {
+                FixedFloat prjLen = FixedVector3.Dot(velocity, normal);
+                if (prjLen != 0)
+                {
+                    velocity -= prjLen * normal;
+                }
+            }
+            return velocity;
         }
 
         protected override bool DetectBoxCollision(FixedBoxCollider collider, ref FixedVector3 normal, ref FixedVector3 borderAdjust)

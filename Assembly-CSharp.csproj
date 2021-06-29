@@ -80,6 +80,7 @@
     <Compile Include="Assets\FixedPhysx\Scripts\FixedBoxCollider.cs" />
     <Compile Include="Assets\FixedPhysx\Scripts\FixedCylinderCollider.cs" />
     <Compile Include="Assets\FixedPhysx\Scripts\FixedEnvColliders.cs" />
+    <Compile Include="Assets\FixedPhysx\Scripts\CollisionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ThreadTimer\netstandard2.0\ThreadTimer.dll" />
